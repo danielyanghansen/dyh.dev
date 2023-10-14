@@ -6,16 +6,16 @@ import NotFound from "./pages/404NotFound"
 import Home from "./pages/Home";
 
 import './index.css';
+import {NavBar} from "./components/navBar";
 
 const App = () => {
   return (
     <BrowserRouter>
+    <NavBar />
       <Routes>
-        <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="*" element={<NotFound />} />
           <Route path="landing" element={<DefaultPage />} />
-        </Route>
+          <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

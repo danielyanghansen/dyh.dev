@@ -1,23 +1,30 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
-//import './navbar.css';
+import './navBar.css';
 
-const NavBar: React.FC = () => {
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+
+export const NavBar = () => {
     return (
         <>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/landing">Landing</Link>
-                    </li>
-                </ul>
-            </nav>
-            <Outlet />
+        <Box className='navBarBox'>
+            <AppBar position="sticky" className='appBar'>
+                <Toolbar className='toolBar'>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        News
+                    </Typography>
+
+                    <Button className='navLinkButton'><Link to="/" color='white'>Home</Link></Button>
+                    <Button color="inherit"><Link to="/landing">Landing</Link></Button>
+                </Toolbar>
+            </AppBar>
+        </Box>
         </>
     );
-};
-
-export default NavBar;
+}
