@@ -13,8 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 export const NavBar = () => {
     return (
         <>
-        <Box className='navBarBox'>
-            <AppBar position="sticky" className='appBar'>
+            <Box className='navBarBox'>
                 <Toolbar className='toolBar'>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         News
@@ -23,8 +22,12 @@ export const NavBar = () => {
                     <Button className='navLinkButton'><Link to="/" color='white'>Home</Link></Button>
                     <Button color="inherit"><Link to="/landing">Landing</Link></Button>
                 </Toolbar>
-            </AppBar>
-        </Box>
+                <Box className='pullDownContainer'>
+                    <Box className='pullDownTab'>
+                        <Typography variant='h4' fontFamily={'monospace'}>MENU</Typography>
+                    </Box>
+                </Box>
+            </Box>
         </>
     );
 }

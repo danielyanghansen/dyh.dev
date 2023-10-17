@@ -13,7 +13,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <LoadingScreen/>
+      <LoadingScreen isOpen={true}/>
       <h1>Daniel Yang Hansen</h1>
       <div className="card">
         <button onClick={() => 
