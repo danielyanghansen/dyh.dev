@@ -2,7 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 
-const NotFoundPage: React.FC<LoadingScreenProps> = () => {
+type NotFoundPageProps = {
+    // props
+};
+
+const NotFoundPage: React.FC<NotFoundPageProps> = () => {
     const grid404 = [
         [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
         [' ', 'X', ' ', 'X', ' ', ' ', 'X', ' ', ' ', 'X', ' ', 'X', ' '],
@@ -56,12 +60,12 @@ const NotFoundPage: React.FC<LoadingScreenProps> = () => {
             //================================================================================================
             //add objects to scene
             blocks.forEach(block => scene.add(block));
-            //Set background to white
-            scene.background = new THREE.Color(0x220000);
+            //Set background to black
+            scene.background = new THREE.Color(0x000000);
             //Add light
-            const light = new THREE.PointLight(0xffffff, 1);
-            light.position.set(5, 5, 5);
-            scene.add(light);
+            // const light = new THREE.PointLight(0xffffff, 1);
+            // light.position.set(5, 5, 5);
+            // scene.add(light);
 
 
         }
