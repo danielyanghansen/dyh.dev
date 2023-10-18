@@ -7,7 +7,7 @@ type NotFoundPageProps = {
 };
 
 const NotFoundPage: React.FC<NotFoundPageProps> = () => {
-    const grid404 = [
+    const grid404reversed = [
         [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',],
         [' ', 'X', ' ', ' ', 'X', ' ', ' ', 'X', 'X', ' ', ' ', 'X', ' ', ' ', 'X', ' ',],
         [' ', 'X', ' ', ' ', 'X', ' ', 'X', ' ', ' ', 'X', ' ', 'X', ' ', ' ', 'X', ' ',],
@@ -23,10 +23,12 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
     const filledMaterial = new THREE.MeshBasicMaterial({ color: 0x00eece });
     const blockGeometry = new THREE.BoxGeometry(blockSideLength, blockSideLength, blockSideLength);
     const blocks: THREE.Mesh[] = [];
-    const width = grid404[0].length;
-    const height = grid404.length;
+    const width = grid404reversed[0].length;
+    const height = grid404reversed.length;
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const grid404 = grid404reversed.reverse()
 
     useEffect(() => {
 
@@ -34,7 +36,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
             const canvas = canvasRef.current;
 
             //create blocks
-            grid404.reverse().forEach((row, i) => {
+            grid404.forEach((row, i) => {
                 return row.forEach((col, j) => {
                     const material = col === 'X' ? filledMaterial : emptyMaterial;
                     const block = new THREE.Mesh(blockGeometry, material);
