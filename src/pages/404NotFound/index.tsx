@@ -18,10 +18,15 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
 
     ]
 
-    const blockSideLength = 1;
+    const blockVirtualSideLength = 1;
+    const blockSideNegativeMargin = 0.08;
     const emptyMaterial = new THREE.MeshBasicMaterial({ color: 0xee1111 });
     const filledMaterial = new THREE.MeshBasicMaterial({ color: 0x00eece });
-    const blockGeometry = new THREE.BoxGeometry(blockSideLength, blockSideLength, blockSideLength);
+
+    const blockActualSideLength = blockVirtualSideLength - 2* blockSideNegativeMargin;
+
+    const blockGeometry = new THREE.BoxGeometry(blockActualSideLength, blockActualSideLength, blockActualSideLength);
+
     const blocks: THREE.Mesh[] = [];
     const width = grid404reversed[0].length;
     const height = grid404reversed.length;
@@ -40,8 +45,8 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
                 return row.forEach((col, j) => {
                     const material = col === 'X' ? filledMaterial : emptyMaterial;
                     const block = new THREE.Mesh(blockGeometry, material);
-                    block.position.x = j * blockSideLength - width / 2 * blockSideLength;
-                    block.position.y = i * blockSideLength - height / 2 * blockSideLength;
+                    block.position.x = j * blockVirtualSideLength - width / 2 * blockVirtualSideLength + blockSideNegativeMargin;
+                    block.position.y = i * blockVirtualSideLength - height / 2 * blockVirtualSideLength + blockSideNegativeMargin;
                     block.position.z = 0;
                     blocks.push(block);
                 })
@@ -71,7 +76,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
             scene.background = new THREE.Color(0xffffff);
             //Add light
             const light = new THREE.PointLight(0xababab, 1);
-            light.position.set(5, 5, 5);
+            light.position.set(0, 0, 10);
             scene.add(light);
 
             var t = 1;
@@ -80,8 +85,10 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
                 t += 0.01;
 
                 blocks.forEach(block => {
-                    block.position.z = Math.sin(t + block.position.x);
+                    block.position.z = Math.sin(t / 2 + block.position.x) /1.5;
                 });
+                camera.position.x =  Math.sin(t/2) * 3;
+                camera.lookAt(0,0,0);
                 
                 renderer.render(scene, camera);
             }
