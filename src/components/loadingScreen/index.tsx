@@ -137,9 +137,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
 
       // Animate the cube
       const animate = () => {
-        requestAnimationFrame(animate);
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
+		  cube.rotation.x += 0.01;
+		  cube.rotation.y += 0.01;
         renderer.render(scene, camera);
         meshes.forEach((element, index) => {
           const gridPos = ArrayPosToGridPos(index);
@@ -151,6 +150,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
         camera.lookAt(meshes[1].position);
         camera.position.x = 3 * Math.sin(t);
         camera.position.z = 3 * Math.cos(t);
+		requestAnimationFrame(animate);
       };
       animate();
     }
