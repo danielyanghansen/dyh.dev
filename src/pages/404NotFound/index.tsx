@@ -21,11 +21,11 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
     ]
 
     const blockVirtualSideLength = 1;
-    const blockSideNegativeMargin = 0.08;
-    const emptyMaterial = new THREE.MeshBasicMaterial({ color: 0xee1111 });
-    const filledMaterial = new THREE.MeshBasicMaterial({ color: 0xeeeeee });
+    const blockSideNegativeMargin = 0.04;
+    const emptyMaterial = new THREE.MeshLambertMaterial({ color: 0xee1111 });
+    const filledMaterial = new THREE.MeshLambertMaterial({ color: 0xeeeeee });
 
-    const blockActualSideLength = blockVirtualSideLength - 2* blockSideNegativeMargin;
+    const blockActualSideLength = blockVirtualSideLength - 2 * blockSideNegativeMargin;
 
     const blockGeometry = new THREE.BoxGeometry(blockActualSideLength, blockActualSideLength, blockActualSideLength);
 
@@ -62,9 +62,9 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
                 canvas.clientWidth / canvas.clientHeight,
                 0.1,
                 100);
-            camera.position.z = 9; 
+            camera.position.z = 9;
             camera.position.y = 3;
-            camera.position.x = 5;
+
             camera.lookAt(0, 0, 0)
 
             //create renderer
@@ -77,9 +77,10 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
             //Set background to sky blue
             scene.background = new THREE.Color(0x60DFFE);
             //Add light
-            const light = new THREE.PointLight(0xababab, 1);
-            light.position.set(0, 0, 10);
-            scene.add(light);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(0, 5, 100);
+            scene.add(light, ambientLight);
 
             var t = 1;
             const animate = () => {
@@ -87,11 +88,13 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
                 t += 0.01;
 
                 blocks.forEach(block => {
-                    block.position.z = Math.sin(t / 2 + block.position.x) /1.5;
+                    block.position.z =
+                        Math.sin(t * 5 + block.position.x) / 3
+                        + Math.cos(t + block.position.y) / 15;
                 });
-                camera.position.x =  Math.sin(t/2) * 3;
-                camera.lookAt(0,0,0);
-                
+                camera.position.x = Math.sin(t / 2) * 3;
+                camera.lookAt(0, 0, 0);
+
                 renderer.render(scene, camera);
             }
             animate();
@@ -108,13 +111,10 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
             <div className={"canvasContainer"}>
                 <canvas className={"canvas"} ref={canvasRef}></canvas>
             </div>
-                <h1>You seem to have misnavigated</h1>
+            <h1>You seem to have misnavigated</h1>
         </div>
     );
 
 }
 
-const NoPage = () => {
-    return <h1>404</h1>;
-};
 export default NotFoundPage;

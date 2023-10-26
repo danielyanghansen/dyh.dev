@@ -69,3 +69,6 @@
     }
   }
   
+  canvas {
+    width: max-content;
+  }
