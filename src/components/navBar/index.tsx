@@ -6,23 +6,27 @@ import './navBar.css';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 
 export const NavBar: React.FC = () => {
   return (
     <>
       <Box className="navBarBox">
         <Toolbar className="toolBar">
-          <Button className="navLinkButton">
+          <Box className="box">
             <Link className="navLink" to="/" color="white">
               Home
             </Link>
-          </Button>
-          <Button className="navLinkButton">
+          </Box>
+          <Box className="box">
+            <Link className="navLink" to="/model" color="white">
+              Scene
+            </Link>
+          </Box>
+          <Box className="box">
             <Link className="navLink" to="/landing" color="inherit">
               Landing
             </Link>
-          </Button>
+          </Box>
         </Toolbar>
         <Box className="pullDownContainer">
           <Box className="pullDownTab">
