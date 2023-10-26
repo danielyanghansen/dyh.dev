@@ -23,7 +23,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
     const blockVirtualSideLength = 1;
     const blockSideNegativeMargin = 0.08;
     const emptyMaterial = new THREE.MeshBasicMaterial({ color: 0xee1111 });
-    const filledMaterial = new THREE.MeshBasicMaterial({ color: 0x00eece });
+    const filledMaterial = new THREE.MeshBasicMaterial({ color: 0xeeeeee });
 
     const blockActualSideLength = blockVirtualSideLength - 2* blockSideNegativeMargin;
 
@@ -62,9 +62,9 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
                 canvas.clientWidth / canvas.clientHeight,
                 0.1,
                 100);
-            camera.position.z = 8; 
-            camera.position.y = 2;
-            camera.position.x = 4;
+            camera.position.z = 9; 
+            camera.position.y = 3;
+            camera.position.x = 5;
             camera.lookAt(0, 0, 0)
 
             //create renderer
@@ -74,8 +74,8 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
             //================================================================================================
             //add objects to scene
             blocks.forEach(block => scene.add(block));
-            //Set background to white
-            scene.background = new THREE.Color(0xffffff);
+            //Set background to sky blue
+            scene.background = new THREE.Color(0x60DFFE);
             //Add light
             const light = new THREE.PointLight(0xababab, 1);
             light.position.set(0, 0, 10);
@@ -105,8 +105,10 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
 
     return (
         <div className={"page"}>
-            <h1>404</h1>
-            <canvas className={"canvas"} ref={canvasRef}></canvas>
+            <div className={"canvasContainer"}>
+                <canvas className={"canvas"} ref={canvasRef}></canvas>
+            </div>
+                <h1>You seem to have misnavigated</h1>
         </div>
     );
 

@@ -1,14 +1,28 @@
 #root {
     width: max-content;
+    height: max-content;
+    margin: 0 auto;
+    display: flex;
 }
 
 .page {
-    width: 100wv;
+    width: 100vw;
+}
+
+.canvasContainer {
+    position: relative;
+    border: 12px solid black;
+    display: flex;
+    justify-content: center;
+    border-radius: 36px;
+    outline: 10px solid white;
+
 }
 
 .canvas {
-    width: 200%;
+    width: 100%;
     height: 100%;
     top: 0;
     left: 0;
+    z-index: -1;
 }
