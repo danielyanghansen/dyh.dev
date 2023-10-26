@@ -15,12 +15,12 @@ export const NavBar = () => {
         <>
             <Box className='navBarBox'>
                 <Toolbar className='toolBar'>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        News
-                    </Typography>
-
-                    <Button className='navLinkButton'><Link to="/" color='white'>Home</Link></Button>
-                    <Button color="inherit"><Link to="/landing">Landing</Link></Button>
+                    <Button className='navLinkButton'>
+                        <Link className='navLink' to="/" color='white'>Home</Link>
+                    </Button>
+                    <Button className='navLinkButton'>
+                        <Link className='navLink' to="/landing" color="inherit">Landing</Link>
+                    </Button>
                 </Toolbar>
                 <Box className='pullDownContainer'>
                     <Box className='pullDownTab'>

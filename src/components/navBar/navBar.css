@@ -9,13 +9,13 @@
     justify-content: space-between;
     justify-items: space-between;
     display: flex;
-    transition: top 1.5s ease-in-out;
+    transition: top 1s ease-in-out;
 
 }
 
 :hover {
     top: 0px;
-    transition: top 0.7s ease-in-out;
+    transition: top 0.5s ease-in-out;
 }
 
 .appBar {
@@ -26,7 +26,7 @@
 
 .toolBar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 0 1.5em;
     height: inherit;
@@ -50,12 +50,16 @@
     border-radius: 8px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
     background-color: #1a1a1a;
     cursor: pointer;
     transition: border-color 0.25s;
+}
+
+.navLink {
+    color: white;
+    font-size: 3em;
+    font-weight: 500;
+    font-family: inherit;
     text-decoration: none;
 }
 
