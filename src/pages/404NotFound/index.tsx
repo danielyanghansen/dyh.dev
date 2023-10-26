@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
+
 import * as THREE from 'three';
+import './404NotFound.css'
 
 
 type NotFoundPageProps = {
@@ -102,9 +104,9 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
 
 
     return (
-        <div>
+        <div className={"page"}>
             <h1>404</h1>
-            <canvas ref={canvasRef}></canvas>
+            <canvas className={"canvas"} ref={canvasRef}></canvas>
         </div>
     );
 

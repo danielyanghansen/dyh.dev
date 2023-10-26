@@ -1,7 +1,11 @@
-import './DefaultPage.css';
+import React from 'react';
+
 import { useDispatch, useSelector, useStore } from 'react-redux'
-import { actions, reducer, selectGrid } from '../../store.ts';
-import LoadingScreen from '../../components/loadingScreen';
+
+import LoadingScreen from '@/components/loadingScreen';
+import { actions, selectGrid } from '@/store.ts';
+
+import './DefaultPage.css';
 
 const App = () => {
   const grid = useSelector(selectGrid);
@@ -13,10 +17,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <LoadingScreen isOpen={true}/>
+      <LoadingScreen isOpen={true} />
       <h1>Daniel Yang Hansen</h1>
       <div className="card">
-        <button onClick={() => 
+        <button onClick={() =>
           dispatch(actions.updateGridHeight(height + 1))
         }>
           increment

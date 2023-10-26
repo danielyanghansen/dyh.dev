@@ -1,0 +1,14 @@
+#root {
+    width: max-content;
+}
+
+.page {
+    width: 100wv;
+}
+
+.canvas {
+    width: 200%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
