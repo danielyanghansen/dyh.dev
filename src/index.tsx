@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import ModelLoaderPage from './pages/ModelLoader';
 
 import './index.css';
-import { NavBar } from './components/navBar';
+import { NavBar } from '@/components';
 
 const App: React.FC = () => {
   return (

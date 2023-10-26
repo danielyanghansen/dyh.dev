@@ -5,7 +5,9 @@ interface LoadingScreenProps {
   isOpen: boolean;
 }
 
-const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
+export const LoadingScreen: React.FC<LoadingScreenProps> = ({
+  isOpen = true,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const green_basic = new THREE.MeshStandardMaterial({ color: 'green' });
@@ -163,5 +165,3 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
     </div>
   );
 };
-
-export default LoadingScreen;

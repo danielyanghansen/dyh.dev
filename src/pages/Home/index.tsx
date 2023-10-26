@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { AboutMeCard, ListOfExperiences } from '@/components';
+import { Box } from '@mui/material';
 
 const Home: React.FC = () => {
-  const [numberState, setNumberState] = useState(5);
   return (
-    <div>
-      <h1>Home</h1>
-      <button
-        onClick={() => {
-          setNumberState(numberState + 1);
-        }}
-      >
-        Increment
-      </button>
-      <h2>{numberState}</h2>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100vw',
+        justifyContent: 'space-between',
+      }}
+    >
+      <div>
+        <ListOfExperiences />
+      </div>
+      <AboutMeCard />
+    </Box>
   );
 };
 

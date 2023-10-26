@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useDispatch, useSelector, useStore } from 'react-redux';
 
-import LoadingScreen from '@/components/loadingScreen';
+import { LoadingScreen } from '@/components';
 import { actions, selectGrid } from '@/store.ts';
 
 import './DefaultPage.css';

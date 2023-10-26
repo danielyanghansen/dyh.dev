@@ -8,9 +8,11 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 interface PageProps {}
 
 const ModelLoaderPage: React.FC<PageProps> = () => {
-  const disposals: (() => void)[] = [];
+  const disposals: Array<() => void> = [];
   const disposeAll = (): void => {
-    disposals.forEach((d) => d());
+    disposals.forEach((d) => {
+      d();
+    });
   };
 
   const loader = new GLTFLoader();
@@ -82,8 +84,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
       );
 
       const dispose = (): void => {
-
-        console.log("dispose called")
+        console.log('dispose called');
       };
 
       disposals.push(dispose);
@@ -98,7 +99,6 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
   }, [canvasRef.current]);
 
   useEffect(() => {
-
     return () => {
       if (location.pathname !== '/model') {
         disposeAll();

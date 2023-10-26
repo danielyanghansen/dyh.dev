@@ -1,0 +1,13 @@
+/* Customize the styling of your About Me page here */
+.card {
+  display: flexbox;
+  width: max-content;
+}
+.linkButton {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.List {
+  color: purple;
+}

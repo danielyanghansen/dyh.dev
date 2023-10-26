@@ -1,5 +1,5 @@
 .navBarBox {
-  position: absolute;
+  position: fixed;
   left: 0px;
   top: -100px;
   width: 100%;
@@ -88,5 +88,5 @@
 }
 
 .box {
-   padding-left: 2ch;
+  padding-left: 2ch;
 }
