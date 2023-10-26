@@ -2,15 +2,18 @@ import React, { useEffect, useRef } from 'react';
 
 import * as THREE from 'three';
 import { type GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface PageProps {
-  // props
-}
+interface PageProps {}
 
 const ModelLoaderPage: React.FC<PageProps> = () => {
-  const loader = new GLTFLoader();
+  const disposals: (() => void)[] = [];
+  const disposeAll = (): void => {
+    disposals.forEach((d) => d());
+  };
 
+  const loader = new GLTFLoader();
   let _gltf: GLTF;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -18,7 +21,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
   useEffect(() => {
     if (canvasRef?.current != null) {
       // ============================================================================================
-      // Configure Camera, Scene, and Renderer
+      // Configure Camera, Scene, OrbitControls and Renderer
       // ============================================================================================
       const canvas = canvasRef.current;
 
@@ -46,6 +49,8 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
+      const controls = new OrbitControls(camera, renderer.domElement);
+
       // ============================================================================================
       // Add Lights, shadows, fog, and background
       // ============================================================================================
@@ -59,18 +64,6 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
       scene.fog = new THREE.Fog(0x000000, 1, 1000);
       scene.background = new THREE.Color(0xbef7f5);
 
-      const someCube = new THREE.TorusGeometry(5, 1, 100, 100, Math.PI);
-
-      const someMaterial = new THREE.MeshLambertMaterial({
-        color: 0x00ff00,
-        emissive: 0x00ff00,
-        emissiveIntensity: 0.5,
-        side: THREE.DoubleSide,
-      });
-      const someMesh = new THREE.Mesh(someCube, someMaterial);
-
-      scene.add(someMesh);
-
       // ============================================================================================
       // Add Objects
       // ============================================================================================
@@ -78,7 +71,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
       loader.load(
         'casa.glb',
         (gltf) => {
-          gltf.scene.scale.set(100, 100, 100);
+          gltf.scene.scale.set(0.5, 0.5, 0.5);
           scene.add(gltf.scene);
           _gltf = gltf;
         },
@@ -88,9 +81,30 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
         },
       );
 
-      renderer.render(scene, camera);
+      const dispose = (): void => {
+
+        console.log("dispose called")
+      };
+
+      disposals.push(dispose);
+
+      const animate = (): void => {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      };
+      animate();
     }
   }, [canvasRef.current]);
+
+  useEffect(() => {
+
+    return () => {
+      if (location.pathname !== '/model') {
+        disposeAll();
+      }
+    };
+  }, [location]);
 
   return (
     <div className={'page'}>
