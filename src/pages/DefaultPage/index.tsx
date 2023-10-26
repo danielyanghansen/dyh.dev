@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import { useDispatch, useSelector, useStore } from "react-redux";
+import { useDispatch, useSelector, useStore } from 'react-redux';
 
-import LoadingScreen from "@/components/loadingScreen";
-import { actions, selectGrid } from "@/store.ts";
+import LoadingScreen from '@/components/loadingScreen';
+import { actions, selectGrid } from '@/store.ts';
 
-import "./DefaultPage.css";
+import './DefaultPage.css';
 
-const App = () => {
+const App: React.FC = () => {
   const grid = useSelector(selectGrid);
   const height = grid.gridHeight;
 

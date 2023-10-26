@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
-import * as THREE from "three";
+import * as THREE from 'three';
 interface LoadingScreenProps {
   isOpen: boolean;
 }
@@ -8,15 +8,15 @@ interface LoadingScreenProps {
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const green_basic = new THREE.MeshStandardMaterial({ color: "green" });
-  const white_basic = new THREE.MeshStandardMaterial({ color: "white" });
-  const teal_basic = new THREE.MeshStandardMaterial({ color: "teal" });
+  const green_basic = new THREE.MeshStandardMaterial({ color: 'green' });
+  const white_basic = new THREE.MeshStandardMaterial({ color: 'white' });
+  const teal_basic = new THREE.MeshStandardMaterial({ color: 'teal' });
   const res = 26;
   const res2 = 26;
   const refSize = 6;
 
   const boxGrid = {
-    //var?
+    // var?
     xResolution: res,
     yResolution: res2,
     sideLength: 1,
@@ -25,14 +25,14 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
     boxes: new Array(res * res2),
   };
 
-  const displayString = "Loading...";
+  const displayString = 'Loading...';
 
   const innerDimX = (refSize * boxGrid.sideLength) / boxGrid.xResolution;
   const innerDimZ = (refSize * boxGrid.sideLength) / boxGrid.yResolution;
   const miniBox = new THREE.BoxGeometry(
     innerDimX,
     boxGrid.maxHeight,
-    innerDimZ
+    innerDimZ,
   );
 
   const ArrayPosToGridPos = (arrayPos: number) => {
@@ -45,10 +45,10 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
   const IsAtEdge = (arrayPos: number) => {
     const gridPos = ArrayPosToGridPos(arrayPos);
     return (
-      gridPos.positionX == 0 ||
-      gridPos.positionX == boxGrid.xResolution - 1 ||
-      gridPos.positionY == 0 ||
-      gridPos.positionY == boxGrid.yResolution - 1
+      gridPos.positionX === 0 ||
+      gridPos.positionX === boxGrid.xResolution - 1 ||
+      gridPos.positionY === 0 ||
+      gridPos.positionY === boxGrid.yResolution - 1
     );
   };
 
@@ -58,10 +58,10 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
       Math.abs(
         Math.sqrt(
           Math.pow(gridPos.positionX - boxGrid.xResolution / 2, 2) +
-            Math.pow(gridPos.positionY - boxGrid.yResolution / 2, 2)
-        )
+            Math.pow(gridPos.positionY - boxGrid.yResolution / 2, 2),
+        ),
       ) %
-        2 ==
+        2 ===
       1
     );
   };
@@ -71,12 +71,12 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
     return (
       Math.sqrt(
         Math.pow(gridPos.positionX - boxGrid.xResolution / 2, 2) +
-          Math.pow(gridPos.positionY - boxGrid.yResolution / 2, 2)
+          Math.pow(gridPos.positionY - boxGrid.yResolution / 2, 2),
       ) < distance
     );
   };
 
-  var t = 1;
+  let t = 1;
 
   useEffect(() => {
     if (isOpen && canvasRef.current) {
@@ -90,7 +90,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
         75,
         canvas.clientWidth / canvas.clientHeight,
         0.1,
-        1000
+        1000,
       );
       camera.position.z = 5;
       camera.position.y = 5;
@@ -125,12 +125,12 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
         scene.add(element);
       });
 
-      //add a light source
+      // add a light source
       // const light = new THREE.PointLight(0xffffff, 1);
       // light.position.set(5, 5, 5);
       // scene.add(light);
 
-      //Set background to white
+      // Set background to white
       scene.background = new THREE.Color(0xffffff);
 
       // Animate the cube
@@ -155,7 +155,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isOpen = true }) => {
   }, [isOpen]);
 
   return (
-    <div className={`modal ${isOpen ? "is-active" : ""}`}>
+    <div className={`modal ${isOpen ? 'is-active' : ''}`}>
       <div className="modal-background"></div>
       <div className="modal-content">
         <canvas ref={canvasRef} />

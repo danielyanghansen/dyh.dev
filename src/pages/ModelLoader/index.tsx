@@ -1,20 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
-import * as THREE from "three";
-import { type GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import * as THREE from 'three';
+import { type GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-type PageProps = {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface PageProps {
   // props
-};
+}
 
 const ModelLoaderPage: React.FC<PageProps> = () => {
   const loader = new GLTFLoader();
-  var _gltf: GLTF;
+
+  let _gltf: GLTF;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (canvasRef.current) {
+    if (canvasRef?.current != null) {
       // ============================================================================================
       // Configure Camera, Scene, and Renderer
       // ============================================================================================
@@ -25,7 +27,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
         75,
         canvas.clientWidth / canvas.clientHeight,
         0.1,
-        1000
+        1000,
       );
       camera.position.z = 5;
       camera.position.y = 5;
@@ -33,14 +35,14 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
       camera.lookAt(0, 0, 0);
 
       const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
+        canvas,
         antialias: true,
         alpha: true,
         depth: true,
         preserveDrawingBuffer: true,
       });
 
-      renderer.setClearColor("SkyBlue");
+      renderer.setClearColor('SkyBlue');
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
@@ -59,10 +61,6 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
 
       const someCube = new THREE.TorusGeometry(5, 1, 100, 100, Math.PI);
 
-      someCube.computeVertexNormals();
-      someCube.normalizeNormals();
-
-      const normals = someCube.getAttribute("normal");
       const someMaterial = new THREE.MeshLambertMaterial({
         color: 0x00ff00,
         emissive: 0x00ff00,
@@ -78,7 +76,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
       // ============================================================================================
 
       loader.load(
-        "casa.glb",
+        'casa.glb',
         (gltf) => {
           gltf.scene.scale.set(100, 100, 100);
           scene.add(gltf.scene);
@@ -87,7 +85,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
         undefined,
         (error) => {
           console.error(error);
-        }
+        },
       );
 
       renderer.render(scene, camera);
@@ -95,8 +93,8 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
   }, [canvasRef.current]);
 
   return (
-    <div className={"page"}>
-      <canvas className={"canvas"} ref={canvasRef}></canvas>
+    <div className={'page'}>
+      <canvas className={'canvas'} ref={canvasRef}></canvas>
     </div>
   );
 };

@@ -1,13 +1,14 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import "./navBar.css";
+import React from 'react';
 
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Link } from 'react-router-dom';
+import './navBar.css';
 
-export const NavBar = () => {
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+
+export const NavBar: React.FC = () => {
   return (
     <>
       <Box className="navBarBox">
@@ -25,7 +26,7 @@ export const NavBar = () => {
         </Toolbar>
         <Box className="pullDownContainer">
           <Box className="pullDownTab">
-            <Typography variant="h4" fontFamily={"monospace"}>
+            <Typography variant="h4" fontFamily={'monospace'}>
               MENU
             </Typography>
           </Box>
