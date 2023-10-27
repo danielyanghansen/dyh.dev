@@ -4,12 +4,12 @@ import * as THREE from 'three';
 import { type GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-const cameraDefaultPosition = new THREE.Vector3(10,5,5);
+const cameraDefaultPosition = new THREE.Vector3(10, 5, 5);
 const modelScale = new THREE.Vector3(0.5, 0.5, 0.5);
 const directionalLightPosition = new THREE.Vector3(5, -5, 5);
 
 //VERY SENSITIVE
-const lanternPointLightPosition = new THREE.Vector3(3.4,0.7,1.7);
+const lanternPointLightPosition = new THREE.Vector3(3.4, 0.7, 1.7);
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface PageProps {}
@@ -68,7 +68,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
       const ambientLight = new THREE.AmbientLight(0xaaaaff, 0.2);
 
       const lanternPointLight = new THREE.PointLight(0xefc070, 100, 100);
-      lanternPointLight.position.copy(lanternPointLightPosition)
+      lanternPointLight.position.copy(lanternPointLightPosition);
 
       //For checking light position
       /*
@@ -101,21 +101,20 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
 
       const dispose = (): void => {
         console.log('dispose called');
-        light.dispose()
-        ambientLight.dispose()
-        lanternPointLight.dispose()
+        light.dispose();
+        ambientLight.dispose();
+        lanternPointLight.dispose();
 
-        renderer.dispose()
-
+        renderer.dispose();
       };
 
       disposals.push(dispose);
 
       const animate = (): void => {
-          controls.update();
-          renderer.render(scene, camera);
-          requestAnimationFrame(animate);
-        };
+        controls.update();
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      };
       animate();
     }
   }, [canvasRef.current]);

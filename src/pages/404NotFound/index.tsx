@@ -98,8 +98,8 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
       scene.add(light, ambientLight);
 
       const animate = (): void => {
-          t += 0.01;
-          
+        t += 0.01;
+
         blocks.forEach((block) => {
           block.position.z =
             Math.sin(t * 5 + block.position.x) / 3 +
@@ -107,7 +107,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = () => {
         });
         camera.position.x = Math.sin(t / 2) * 3;
         camera.lookAt(0, 0, 0);
-        
+
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
       };
