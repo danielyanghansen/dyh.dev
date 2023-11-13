@@ -64,7 +64,8 @@ export const SceneRenderer: React.FC<SceneRendererProps> = (props) => {
         requestAnimationFrame(animate);
       };
     }
-  }), [canvasRef.current];
+  }),
+    [canvasRef.current];
 
   return <canvas ref={canvasRef} className="canvas" />;
 };

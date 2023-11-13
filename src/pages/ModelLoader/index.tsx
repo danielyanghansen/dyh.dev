@@ -6,9 +6,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const cameraDefaultPosition = new THREE.Vector3(10, 5, 5);
 const modelScale = new THREE.Vector3(0.5, 0.5, 0.5);
+const carScale = new THREE.Vector3(1.3, 1.3, 1.3);
 const directionalLightPosition = new THREE.Vector3(5, -5, 5);
 
-//VERY SENSITIVE
+// VERY SENSITIVE
 const lanternPointLightPosition = new THREE.Vector3(3.4, 0.7, 1.7);
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -23,7 +24,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
   };
 
   const loader = new GLTFLoader();
-  let _gltf: GLTF;
+  // let _gltf: GLTF;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -70,7 +71,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
       const lanternPointLight = new THREE.PointLight(0xefc070, 100, 100);
       lanternPointLight.position.copy(lanternPointLightPosition);
 
-      //For checking light position
+      // For checking light position
       /*
       const ball = new THREE.Mesh(new THREE.SphereGeometry(0.15), new THREE.MeshBasicMaterial({color: 0xff0000}));
       ball.position.copy(lanternPointLightPosition)
@@ -90,8 +91,27 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
         'casa.glb',
         (gltf) => {
           gltf.scene.scale.copy(modelScale);
+          gltf.scene.castShadow = true;
+          gltf.scene.position.y = 0;
+          gltf.scene.position.z = 0;
           scene.add(gltf.scene);
-          _gltf = gltf;
+        },
+        undefined,
+        (error) => {
+          console.error(error);
+        },
+      );
+      loader.load(
+        'truck_long.glb',
+        (gltf) => {
+          gltf.scene.castShadow = true;
+          gltf.scene.scale.copy(carScale);
+          gltf.scene.rotateZ(-0.05);
+          gltf.scene.rotateY(Math.PI / 2.2);
+          gltf.scene.position.x = 3.5;
+          gltf.scene.position.y = -0.75;
+          gltf.scene.position.z = 0;
+          scene.add(gltf.scene);
         },
         undefined,
         (error) => {
