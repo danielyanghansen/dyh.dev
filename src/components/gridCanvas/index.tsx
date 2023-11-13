@@ -53,9 +53,19 @@ const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
   map.forEach((cell) => {
     const cellX = cell.coords.x;
     const cellY = cell.coords.y;
-    let heightLikeY = sideLengthUnit;
+    let heightLikeY = sideLengthUnit / 2;
 
     cell.blockStack.forEach((blockVariant) => {
+      switch (blockVariant) {
+        case 'dirtSlab':
+        case 'grassSlab':
+        case 'stoneSlab':
+        case 'waterSlab':
+          heightLikeY += 0.25 * sideLengthUnit;
+          break;
+        default:
+          break;
+      }
       switch (blockVariant) {
         case 'dirtBlock':
           const dirtBlockClone = dirtBlock.clone();
@@ -113,7 +123,7 @@ const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
         case 'grassSlab':
         case 'stoneSlab':
         case 'waterSlab':
-          heightLikeY += 0.5 * sideLengthUnit;
+          heightLikeY += 0.25 * sideLengthUnit;
           break;
       }
     });
