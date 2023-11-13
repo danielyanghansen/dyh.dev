@@ -3,15 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-import { noiseFunctor, noiseParams } from '@/utils/terrainGeneration';
-import {
-  gridInfo,
-  sideLengthUnit,
-  offset,
-  fillMap,
-  type BlockVariant,
-  type CellProps,
-} from './gridUtils';
+import { gridInfo, sideLengthUnit, fillMap, type CellProps } from './gridUtils';
 
 const cameraDefaultPosition = new THREE.Vector3(10, 10, 10);
 const directionalLightPosition = new THREE.Vector3(20, -20, 20);
@@ -47,13 +39,11 @@ const grassBlock = new THREE.Mesh(block, grassBlockMaterial);
 const stoneBlock = new THREE.Mesh(block, stoneBlockMaterial);
 const waterBlock = new THREE.Mesh(block, waterBlockMaterial);
 
-let disposeRandomBlock: () => void;
-
 const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
   map.forEach((cell) => {
     const cellX = cell.coords.x;
     const cellY = cell.coords.y;
-    let heightLikeY = sideLengthUnit / 2;
+    let heightLikeY = 0;
 
     cell.blockStack.forEach((blockVariant) => {
       switch (blockVariant) {
@@ -64,6 +54,7 @@ const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
           heightLikeY += 0.25 * sideLengthUnit;
           break;
         default:
+          heightLikeY += sideLengthUnit / 2;
           break;
       }
       switch (blockVariant) {
@@ -104,11 +95,7 @@ const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
           break;
         case 'waterSlab':
           const waterSlabClone = waterSlab.clone();
-          waterSlabClone.position.set(
-            cellX,
-            heightLikeY - sideLengthUnit / 2,
-            cellY,
-          );
+          waterSlabClone.position.set(cellX, heightLikeY, cellY);
           scene.add(waterSlabClone);
           break;
       }
@@ -117,7 +104,7 @@ const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
         case 'grassBlock':
         case 'stoneBlock':
         case 'waterBlock':
-          heightLikeY += sideLengthUnit;
+          heightLikeY += sideLengthUnit / 2;
           break;
         case 'dirtSlab':
         case 'grassSlab':

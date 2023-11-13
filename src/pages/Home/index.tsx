@@ -1,6 +1,6 @@
 import React from 'react';
 import { AboutMeCard, ListOfExperiences } from '@/components';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { GridCanvas } from '@/components/gridCanvas';
 
 const Home: React.FC = () => {
@@ -24,6 +24,7 @@ const Home: React.FC = () => {
           width: '50vw',
         }}
       >
+        <Typography variant="h4">3D Grid With Terrain Generation</Typography>
         <GridCanvas />
       </Box>
     </Box>
