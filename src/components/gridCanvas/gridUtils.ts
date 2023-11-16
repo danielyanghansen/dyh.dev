@@ -1,4 +1,4 @@
-import { noiseFunctor, noiseParams } from '@/utils/terrainGeneration';
+import { noiseFunctor, NoiseParams } from '@/utils/terrainGeneration';
 import * as THREE from 'three';
 
 export const gridInfo = {
@@ -31,11 +31,12 @@ export const fillMap = (map: Array<CellProps>): void => {
     for (let zIndex = 0; zIndex < gridInfo.divisions; zIndex++) {
       const x = xIndex * sideLengthUnit - offset + sideLengthUnit / 2;
       const z = zIndex * sideLengthUnit - offset + sideLengthUnit / 2;
-      const noiseProps: noiseParams = {
+      const noiseProps: NoiseParams = {
         coords: { x, z },
+        maxValues: { x: gridInfo.divisions, z: gridInfo.divisions},
         optionalParams: {
           frequency: 500,
-          redistribution: 50, // needs to be an even number to avoid NaN
+          redistribution: 2, // needs to be an even number to avoid NaN
           extraOctaves: [
             {
               frequency: 0.005,

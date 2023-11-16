@@ -1,14 +1,19 @@
-import { createNoise3D } from 'simplex-noise';
+import { createNoise2D, createNoise3D } from 'simplex-noise';
+import { seededRandom } from 'three/src/math/MathUtils';
 
-export type noiseParams = {
+export type NoiseParams = {
   coords: {
     x: number;
     z: number;
-    yHeight?: number;
+  };
+  maxValues?: {
+    x: number;
+    z: number;
   };
   optionalParams?: {
     redistribution?: number;
     frequency?: number;
+    randomSeed?: number;
     extraOctaves?: {
       frequency: number;
       redistribution: number;
@@ -16,27 +21,24 @@ export type noiseParams = {
   };
 };
 
-export const noiseFunctor = (noiseParams: noiseParams) => {
+/**
+ * Note: Uses x and z coordinates in name only. This is to make it easier to use 2D noise functions generate 3D terrain.
+ * @param noiseParams
+ * @returns a noise value between -1 and 1
+ */
+export const noiseFunctor = (noiseParams: NoiseParams) => {
   const { coords, optionalParams } = noiseParams;
-  const noise3D = createNoise3D();
+  const noise2D = createNoise2D(() => seededRandom(optionalParams?.randomSeed));
   const frequency = optionalParams?.frequency ?? 1;
 
-  const baseNoise = noise3D(
-    frequency * coords.x,
-    frequency * (coords.yHeight ?? 0),
-    frequency * coords.z,
-  );
+  const baseNoise = noise2D(frequency * coords.x, frequency * coords.z);
 
   const curvedBase = Math.pow(baseNoise, optionalParams?.redistribution ?? 1);
 
   const extraNoise = optionalParams?.extraOctaves?.reduce(
     (acc, curr) =>
       acc +
-      noise3D(
-        coords.x * curr.frequency,
-        coords.yHeight ?? 0,
-        coords.z * curr.frequency,
-      ) *
+      noise2D(coords.x * curr.frequency, coords.z * curr.frequency) *
         curr.redistribution,
     0,
   );
