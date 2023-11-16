@@ -2,7 +2,7 @@ import {
   CreateThreeScene,
   ThreeCameraConfig,
   ThreeSceneActions,
-} from '@/types';
+} from '@/types/three';
 import * as THREE from 'three';
 
 export const createBoxScene: CreateThreeScene = (config) => {
