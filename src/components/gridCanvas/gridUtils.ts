@@ -4,7 +4,7 @@ import * as THREE from 'three';
 export const gridInfo = {
   // Keep the ration 1 to 1 for now
   size: 10,
-  divisions: 50,
+  divisions: 24,
 };
 
 export const sideLengthUnit = gridInfo.size / gridInfo.divisions;
@@ -33,22 +33,22 @@ export const fillMap = (map: Array<CellProps>): void => {
       const z = zIndex * sideLengthUnit - offset + sideLengthUnit / 2;
       const noiseProps: NoiseParams = {
         coords: { x, z },
-        maxValues: { x: gridInfo.divisions, z: gridInfo.divisions},
+        maxValues: { x: gridInfo.divisions, z: gridInfo.divisions },
         optionalParams: {
-          frequency: 500,
+          frequency: 10,
           redistribution: 2, // needs to be an even number to avoid NaN
           extraOctaves: [
             {
               frequency: 0.005,
-              redistribution: 2,
-            },
-            {
-              frequency: 0.0025,
               redistribution: 4,
             },
             {
-              frequency: 0.00125,
+              frequency: 0.0025,
               redistribution: 8,
+            },
+            {
+              frequency: 0.00125,
+              redistribution: 16,
             },
           ],
         },
@@ -59,41 +59,41 @@ export const fillMap = (map: Array<CellProps>): void => {
 
       // Set up initial block stack
 
-      if (noise < 0.1) {
+      if (noise < -0.9) {
         blockStack.push('waterBlock');
       } else {
         blockStack.push('grassBlock');
       }
-      if (noise > 0.3) {
+      if (noise > -0.7) {
         blockStack.push('grassSlab');
       } else if (noise > 0.2) {
         blockStack.push('stoneSlab');
       }
-      if (noise > 0.4) {
+      if (noise > -0.5) {
         blockStack.push('stoneSlab');
       }
-      if (noise > 0.6) {
+      if (noise > -0.3) {
         blockStack.push('grassSlab');
       }
-      if (noise > 0.8) {
+      if (noise > -0.1) {
         blockStack.push('dirtSlab');
       }
-      if (noise > 1.0) {
+      if (noise > 0.1) {
         blockStack.push('grassSlab');
       }
-      if (noise > 1.2) {
+      if (noise > 0.3) {
         blockStack.push('grassSlab');
       }
-      if (noise > 1.4) {
+      if (noise > 0.5) {
         blockStack.push('grassSlab');
       }
-      if (noise > 1.6) {
+      if (noise > 0.7) {
         blockStack.push('grassSlab');
       }
-      if (noise > 1.8) {
+      if (noise > 0.9) {
         blockStack.push('stoneSlab');
       }
-      if (noise > 2.0) {
+      if (noise > 0.95) {
         blockStack.push('stoneSlab');
       }
 
