@@ -3,7 +3,14 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-import { gridInfo, sideLengthUnit, fillMap, type CellProps } from './gridUtils';
+import {
+  gridInfo,
+  sideLengthUnit,
+  offset,
+  fillMap,
+  type CellProps,
+  noiseFunctor,
+} from './gridUtils';
 
 const cameraDefaultPosition = new THREE.Vector3(10, 10, 10);
 const directionalLightPosition = new THREE.Vector3(20, -20, 20);
@@ -117,6 +124,31 @@ const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
   });
 };
 
+const populateNoise = (scene: THREE.Scene) => {
+  for (let x = 0; x <= gridInfo.divisions; x++) {
+    for (let y = 0; y <= gridInfo.divisions; y++) {
+      const noise = noiseFunctor({
+        coords: {
+          x,
+          z: y,
+        },
+        maxValues: {
+          x: gridInfo.divisions,
+          z: gridInfo.divisions,
+        },
+      });
+      const block = dirtBlock.clone();
+      const nx = x * sideLengthUnit;
+      const ny = y * sideLengthUnit;
+      const nz = noise * 5 * sideLengthUnit;
+      block.position.set(nx - offset, 0, ny - offset);
+      block.scale.set(1, noise * 10, 1);
+      block.position.set(nx - offset, nz, ny - offset);
+      scene.add(block);
+    }
+  }
+};
+
 //enable shadows
 // dirtBlock.castShadow = true;
 // grassBlock.castShadow = true;
@@ -208,8 +240,10 @@ export const GridCanvas: React.FC = () => {
       // ============================================================================================
       // Add Objects
       // ============================================================================================
-      fillMap(map);
-      populate(scene, map);
+      //fillMap(map);
+      //populate(scene, map);
+
+      populateNoise(scene);
 
       scene.add(gridHelper);
 
