@@ -137,7 +137,22 @@ const populateNoise = (scene: THREE.Scene) => {
           z: gridInfo.divisions,
         },
       });
-      const block = dirtBlock.clone();
+
+      let blockToClone: THREE.Mesh;
+      if (noise < 0.4) {
+        blockToClone = waterBlock;
+      } else if (noise < 0.6) {
+        blockToClone = dirtBlock;
+      }
+      if (noise < 0.8) {
+        blockToClone = grassBlock;
+      } else {
+        blockToClone = stoneBlock;
+      }
+
+      console.log(noise);
+
+      const block = blockToClone.clone();
       const nx = x * sideLengthUnit;
       const ny = y * sideLengthUnit;
       const nz = noise * 5 * sideLengthUnit;
@@ -241,7 +256,7 @@ export const GridCanvas: React.FC = () => {
       // Add Objects
       // ============================================================================================
       //fillMap(map);
-      //populate(scene, map);
+      //populate(scene, mawp);
 
       populateNoise(scene);
 

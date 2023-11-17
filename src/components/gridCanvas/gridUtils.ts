@@ -6,8 +6,8 @@ import * as THREE from 'three';
 
 export const gridInfo = {
   // Keep the ration 1 to 1 for now
-  size: 10,
-  divisions: 24,
+  size: 16,
+  divisions: 48,
 };
 
 export const sideLengthUnit = gridInfo.size / gridInfo.divisions;
@@ -30,10 +30,10 @@ export type CellProps = {
 };
 
 export const noiseFunctor = createNoiseFunctor({
-  redistribution: 3,
+  redistribution: 4,
   baseOctave: {
-    frequency: 5,
-    weight: 1,
+    frequency: 2,
+    weight: 4,
   },
   extraOctaves: DEFAULT_EXTRA_OCTAVES,
 });
