@@ -8,6 +8,7 @@ import ModelLoaderPage from './pages/ModelLoader';
 
 import './index.css';
 import { NavBar } from '@/components';
+import GridPage2D from './pages/GridPage2D';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Route index element={<Home />} />
         <Route path="landing" element={<DefaultPage />} />
         <Route path="model" element={<ModelLoaderPage />} />
+        <Route path="grid" element={<GridPage2D />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
