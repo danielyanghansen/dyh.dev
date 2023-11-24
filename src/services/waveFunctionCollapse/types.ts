@@ -31,7 +31,6 @@ export type WfcGridInfo<T> = GridInfo<T> & {
   rules: Array<WfcTileRuleset<T>>;
 };
 
-
 export type WfcChoice<T> = {
   x: number;
   y: number;
