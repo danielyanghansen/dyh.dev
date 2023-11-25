@@ -1,8 +1,161 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React, { useState } from 'react';
 
+import txGrass from '@/assets/TX_Tileset_Grass.png';
+import txStoneGround from '@/assets/TX_Tileset_Stone_Ground.png';
+
+type AtlasInfo = {
+  name: string;
+  url: string;
+  widthInTiles: number;
+  heightInTiles: number;
+  tileStride: number;
+};
+
+const atlases: AtlasInfo[] = [
+  {
+    name: 'TX_Tileset_Grass',
+    url: txGrass,
+    widthInTiles: 8,
+    heightInTiles: 8,
+    tileStride: 32,
+  },
+  {
+    name: 'TX_Tileset_Stone_Ground',
+    url: txStoneGround,
+    widthInTiles: 8,
+    heightInTiles: 8,
+    tileStride: 32,
+  },
+];
+
+const SingleAtlasDisplay: React.FC<
+  AtlasInfo & { scale?: number; selectedTile?: { x: number; y: number } }
+> = ({
+  //name,
+  url,
+  widthInTiles,
+  heightInTiles,
+  tileStride,
+  scale = 1,
+  selectedTile,
+}) => {
+  const w = widthInTiles * tileStride * scale;
+  const h = heightInTiles * tileStride * scale;
+  const sections = [];
+  for (let i = 0; i < heightInTiles; i++) {
+    for (let j = 0; j < widthInTiles; j++) {
+      sections.push(
+        <Box
+          sx={{
+            width: `${tileStride * scale}px`,
+            height: `${tileStride * scale}px`,
+            backgroundImage: `url(${url})`,
+            backgroundPosition: `-${j * tileStride * scale}px -${
+              i * tileStride * scale
+            }px`,
+            backgroundSize: `${w}px ${h}px`,
+
+            border:
+              selectedTile?.x === i && selectedTile?.y === j
+                ? '2px solid red'
+                : 'none',
+            zIndex: selectedTile?.x === i && selectedTile?.y === j ? 1 : 0,
+          }}
+        />,
+      );
+    }
+  }
+
+  return (
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${widthInTiles}, ${tileStride * scale}px)`,
+        gridTemplateRows: `repeat(${heightInTiles}, ${tileStride * scale}px)`,
+        gap: '1px',
+        backgroundColor: 'rgba(144, 175, 175, 0.75)',
+      }}
+      className="gridAtlas"
+    >
+      {sections}
+    </Box>
+  );
+};
+
+type AtlasDisplaysProps = {
+  atlases: AtlasInfo[];
+};
+
+const AtlasDisplays: React.FC<AtlasDisplaysProps> = ({ atlases }) => {
+  return (
+    <Box>
+      {atlases.map((atlas) => {
+        const props = {
+          ...atlas,
+          scale: 1,
+          selectedTile: { x: 0, y: 0 },
+        };
+        return (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              border: '1px solid rgba(144, 175, 175, 0.75)',
+            }}
+          >
+            <Typography variant="h4">{atlas.name}</Typography>
+            <SingleAtlasDisplay {...props} />
+          </Box>
+        );
+      })}
+    </Box>
+  );
+};
+
 const GridPage2D: React.FC = () => {
-  return <RandomGrid sideLengthInPixels={50} numCols={16} numRows={12} />;
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Typography variant="h1">GridPage2D</Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'space-between',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h2">RandomGrid</Typography>
+          <RandomGrid sideLengthInPixels={50} numCols={16} numRows={12} />
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h2">Atlases</Typography>
+          <AtlasDisplays atlases={atlases} />
+        </Box>
+      </Box>
+    </Box>
+  );
 };
 
 export default GridPage2D;
@@ -23,6 +176,7 @@ type RandomGridProps = {
   numCols: number;
   disableGridLines?: boolean;
   overrideSideLength?: string;
+  retrieveSelectedTile?: () => void;
 };
 
 const RandomGrid: React.FC<RandomGridProps> = ({
@@ -31,6 +185,7 @@ const RandomGrid: React.FC<RandomGridProps> = ({
   numRows,
   disableGridLines = false,
   overrideSideLength,
+  retrieveSelectedTile,
 }) => {
   const sideLength = overrideSideLength ?? `${sideLengthInPixels}px`;
 
@@ -71,8 +226,10 @@ const Node = (
   initialColor: string,
   disableGridLines: boolean,
   sideLength: string,
+  retrieveSelectedTile?: () => void,
 ) => {
   const [color, setColor] = useState(initialColor);
+
   const onClick = () => {
     setColor(randomColor());
   };
@@ -89,7 +246,7 @@ const Node = (
       }}
       className="node"
       onClick={onClick}
-    />
+    ></div>
   );
 };
 
