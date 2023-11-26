@@ -10,8 +10,8 @@
 
 ## Prerequisites
 
-[Docker](https://docs.docker.com/): For you to be able to run the app in production as intended.
-[Bun](aa.com): Used as a package manager. Replaces `yarn`, `npm` etc.
+- [Docker](https://docs.docker.com/) : For you to be able to run the app in production as intended.
+- [Bun](aa.com) : Used as a package manager. Replaces `yarn`, `npm` etc.
 
 ## Sections
 
