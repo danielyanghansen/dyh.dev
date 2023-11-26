@@ -6,13 +6,12 @@
   "scripts": {
     "dev": "vite",
     "bundle": "tsc && vite build",
-	"serve": "serve -s dist -l 3000",
+    "serve": "serve -s dist -l 3000",
     "preview": "vite preview",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "types": "tsc --emitDeclarationOnly",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
-	"optimize": "vite optimize"
-
+    "optimize": "vite optimize"
   },
   "dependencies": {
     "3js": "^1.0.0",
@@ -31,6 +30,7 @@
     "react-router-dom": "latest",
     "redux": "^4.2.1",
     "redux-store": "^0.0.0",
+    "serve": "^14.2.1",
     "simplex-noise": "^4.0.1",
     "three": "^0.158.0",
     "typescript": "^5.3.2"

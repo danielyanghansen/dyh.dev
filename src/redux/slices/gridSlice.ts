@@ -1,4 +1,3 @@
-
 import { type Slice, createSlice } from '@reduxjs/toolkit';
 
 interface gridCell {
