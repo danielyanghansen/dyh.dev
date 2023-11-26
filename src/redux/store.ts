@@ -1,9 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import { gridReducer } from './slices/gridSlice';
-
-
-export const selectGrid = (state: any): grid => state.reducer.grid;
+import { gridReducer } from './slices/gridSlice.ts';
 
 // Create a simple redux store
 const store = configureStore({

@@ -1,7 +1,7 @@
 import { GridInfo2D } from '@/types/grid';
 import { compose } from 'redux';
 import { createNoise2D, createNoise3D } from 'simplex-noise';
-import { seededRandom } from 'three/src/math/MathUtils';
+import { seededRandom } from 'three/src/math/MathUtils.js';
 
 export const DEFAULT_EXTRA_OCTAVES: Array<OctaveParams> = [
   {

@@ -20,11 +20,15 @@ const App: React.FC = () => {
       <LoadingScreen isOpen={true} />
       <h1>Daniel Yang Hansen</h1>
       <div className="card">
-        <button onClick={() => dispatch(gridActions.updateGridHeight(height + 1))}>
+        <button
+          onClick={() => dispatch(gridActions.updateGridHeight(height + 1))}
+        >
           increment
         </button>
         <h2>Grid heigh is {height}</h2>
-        <button onClick={() => dispatch(gridActions.updateGridHeight(height - 1))}>
+        <button
+          onClick={() => dispatch(gridActions.updateGridHeight(height - 1))}
+        >
           decrement
         </button>
       </div>
