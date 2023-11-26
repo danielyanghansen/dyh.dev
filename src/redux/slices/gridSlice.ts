@@ -1,5 +1,5 @@
 
-import { createSlice } from '@reduxjs/toolkit';
+import { type Slice, createSlice } from '@reduxjs/toolkit';
 
 interface gridCell {
   x: number;
@@ -13,7 +13,7 @@ export interface grid {
 }
 
 // create a slice to store the state of the app
-export const gridSlice = createSlice({
+export const gridSlice: Slice = createSlice({
   name: 'grid',
   initialState: {
     // state goes here

@@ -1,5 +1,5 @@
 import { ThreeSceneActions, ThreeSceneSettings } from '@/types/three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import React, { useEffect, useRef } from 'react';
 
 import * as THREE from 'three';

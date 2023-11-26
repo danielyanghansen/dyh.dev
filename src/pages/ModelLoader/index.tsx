@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
 import * as THREE from 'three';
-import { type GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { type GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const cameraDefaultPosition = new THREE.Vector3(10, 5, 5);
 const modelScale = new THREE.Vector3(0.5, 0.5, 0.5);
