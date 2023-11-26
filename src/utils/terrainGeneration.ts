@@ -60,8 +60,9 @@ export const createNoiseFunctor: NoiseFunctorGenerator = (
 ) => {
   const { redistribution, baseOctave, randomSeed, extraOctaves } = noiseParams;
 
-  const noise2D = createNoise2D(() => seededRandom(randomSeed));
-
+  const noise2D = randomSeed
+    ? createNoise2D(() => seededRandom(randomSeed))
+    : createNoise2D();
   // Transform noise output domain from [-1, 1] to [0, 1]
   const transformNoiseDomain = (noise: number): number => (noise + 1) / 2;
 
