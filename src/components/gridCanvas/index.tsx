@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import {
   gridInfo,
@@ -139,12 +139,11 @@ const populateNoise = (scene: THREE.Scene) => {
       });
 
       let blockToClone: THREE.Mesh;
-      if (noise < 0.4) {
+      if (noise < 0.2) {
         blockToClone = waterBlock;
-      } else if (noise < 0.6) {
+      } else if (noise < 0.4) {
         blockToClone = dirtBlock;
-      }
-      if (noise < 0.8) {
+      } else if (noise < 0.6) {
         blockToClone = grassBlock;
       } else {
         blockToClone = stoneBlock;

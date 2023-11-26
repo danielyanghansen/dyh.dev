@@ -1,7 +1,7 @@
 import { GridInfo2D } from '@/types/grid';
 import { compose } from 'redux';
 import { createNoise2D, createNoise3D } from 'simplex-noise';
-import { seededRandom } from 'three/src/math/MathUtils';
+import { seededRandom } from 'three/src/math/MathUtils.js';
 
 export const DEFAULT_EXTRA_OCTAVES: Array<OctaveParams> = [
   {
@@ -60,8 +60,9 @@ export const createNoiseFunctor: NoiseFunctorGenerator = (
 ) => {
   const { redistribution, baseOctave, randomSeed, extraOctaves } = noiseParams;
 
-  const noise2D = createNoise2D(() => seededRandom(randomSeed));
-
+  const noise2D = randomSeed
+    ? createNoise2D(() => seededRandom(randomSeed))
+    : createNoise2D();
   // Transform noise output domain from [-1, 1] to [0, 1]
   const transformNoiseDomain = (noise: number): number => (noise + 1) / 2;
 

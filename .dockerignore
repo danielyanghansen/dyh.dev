@@ -1,18 +1,16 @@
+# Git
+.git
+
 # Logs
 logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
+# Built files
 node_modules
 dist
 dist-ssr
 build
 build-ssr
-*.local
 
 # Editor directories and files
 .vscode/*
