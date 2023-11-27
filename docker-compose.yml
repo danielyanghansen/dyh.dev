@@ -1,9 +1,10 @@
 version: '3.8'
 
 services:
-  web:
+  web_portfolio:
+    container_name: web_portfolio
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: webapp.Dockerfile
     ports:
       - "3000:3000"
