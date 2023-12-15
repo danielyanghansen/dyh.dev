@@ -1,0 +1,17 @@
+.listOfExperiencesBox {
+  width: 24dvw;
+  top: 2dvh;
+  bottom: 2dvh;
+  left: 2dvh;
+  position: fixed;
+  max-height: 80dvh;
+}
+
+.aboutMeCardBox {
+  width: 24dvw;
+  top: 20dvh;
+  bottom: 20dvh;
+  right: 2dvh;
+  position: fixed;
+  max-height: 60dvh;
+}

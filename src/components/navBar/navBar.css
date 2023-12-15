@@ -10,6 +10,8 @@
   justify-items: space-between;
   display: flex;
   transition: top 1s ease-in-out;
+
+  z-index: 100;
 }
 
 :hover {
@@ -20,6 +22,8 @@
 .appBar {
   background-color: white;
   color: white;
+
+  z-index: 100;
 }
 
 .toolBar {
@@ -39,6 +43,8 @@
   border: 3px solid #1a1a1a50;
   border-top: 0;
   border-radius: 0em 0em 0em 50em;
+
+  z-index: 100;
 }
 
 .navLink {
@@ -47,6 +53,8 @@
   font-weight: 500;
   font-family: monospace;
   text-decoration: none;
+
+  z-index: 100;
 }
 
 @keyframes gradient {
@@ -64,6 +72,8 @@
 .pullDownContainer {
   display: flex;
   justify-content: flex-end;
+
+  z-index: 100;
 }
 
 .pullDownTab {
@@ -85,8 +95,12 @@
   border-radius: 0em 0em 3em 3em;
   border: 2px solid #1a1a1a50;
   border-top: 0;
+
+  z-index: 100;
 }
 
 .box {
   padding-left: 2ch;
+
+  z-index: 100;
 }

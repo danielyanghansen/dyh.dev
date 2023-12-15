@@ -9,5 +9,8 @@
 }
 
 .List {
-  color: purple;
+  color: purple; /*TODO: Put in terms of global styles */
 }
+
+/* Import shared styles */
+@import './shared.css';

@@ -46,13 +46,17 @@ export const ListOfExperiences: React.FC = () => {
 
   return (
     <List
-      sx={{ bgcolor: 'background.paper', width: 500 }}
+      sx={{
+        bgcolor: 'background.paper',
+        height: 'auto',
+        borderRadius: 4,
+      }}
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
+        <Typography variant="h6" className="listOfExperiencesHeader">
           My experiences throughout the years
-        </ListSubheader>
+        </Typography>
       }
     >
       <ListItemButton onClick={handleSchoolClick}>

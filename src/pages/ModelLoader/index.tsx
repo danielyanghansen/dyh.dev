@@ -6,6 +6,7 @@ import {
   GLTFLoader,
 } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import '../../shared.css';
 
 const cameraDefaultPosition = new THREE.Vector3(10, 5, 5);
 const modelScale = new THREE.Vector3(0.5, 0.5, 0.5);
@@ -151,7 +152,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
   }, [location]);
 
   return (
-    <div className={'page'}>
+    <div className={'fullscreenCanvasContainer'}>
       <canvas className={'canvas'} ref={canvasRef}></canvas>
     </div>
   );

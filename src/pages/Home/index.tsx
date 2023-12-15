@@ -1,32 +1,22 @@
 import React from 'react';
 import { AboutMeCard, ListOfExperiences } from '@/components';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { GridCanvas } from '@/components/gridCanvas';
+
+import './home.css';
 
 const Home: React.FC = () => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '100vw',
-          justifyContent: 'space-between',
-        }}
-      >
-        <div>
-          <ListOfExperiences />
-        </div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100dvw' }}>
+      <Box className="listOfExperiencesBox">
+        <ListOfExperiences />
+      </Box>
+
+      <Box className="aboutMeCardBox">
         <AboutMeCard />
       </Box>
-      <Box
-        sx={{
-          width: '50vw',
-        }}
-      >
-        <Typography variant="h4">3D Grid With Terrain Generation</Typography>
-        <GridCanvas />
-      </Box>
+
+      <GridCanvas />
     </Box>
   );
 };

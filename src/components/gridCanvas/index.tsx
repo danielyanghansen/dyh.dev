@@ -12,6 +12,8 @@ import {
   noiseFunctor,
 } from './gridUtils';
 
+import '../../shared.css';
+
 const cameraDefaultPosition = new THREE.Vector3(10, 10, 10);
 const directionalLightPosition = new THREE.Vector3(20, -20, 20);
 
@@ -298,7 +300,7 @@ export const GridCanvas: React.FC = () => {
   // }, [location]);
 
   return (
-    <div>
+    <div className="fullscreenCanvasContainerBackground">
       <canvas className="canvas" ref={canvasRef} />
     </div>
   );
