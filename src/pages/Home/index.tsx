@@ -8,11 +8,21 @@ import './home.css';
 const Home: React.FC = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', width: '100dvw' }}>
-      <Box className="listOfExperiencesBox">
+      <Box
+        className="listOfExperiencesBox"
+        sx={{
+          zIndex: 10,
+        }}
+      >
         <ListOfExperiences />
       </Box>
 
-      <Box className="aboutMeCardBox">
+      <Box
+        className="aboutMeCardBox"
+        sx={{
+          zIndex: 10,
+        }}
+      >
         <AboutMeCard />
       </Box>
 

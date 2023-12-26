@@ -300,7 +300,7 @@ export const GridCanvas: React.FC = () => {
   // }, [location]);
 
   return (
-    <div className="fullscreenCanvasContainerBackground">
+    <div className="fullscreenCanvasContainer">
       <canvas className="canvas" ref={canvasRef} />
     </div>
   );
