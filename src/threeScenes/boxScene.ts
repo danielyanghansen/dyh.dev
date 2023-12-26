@@ -35,7 +35,7 @@ export const createBoxScene: CreateThreeScene = (config) => {
   // =============== GEOMETRY AND MATERIALS =================
   const geometry = new THREE.BoxGeometry();
   geometryObjects.push(geometry);
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  const material = new THREE.MeshLambertMaterial({ color: 0x8b4513 });
   materialObjects.push(material);
 
   // ==================== 3D OBJECTS ====================
@@ -45,12 +45,14 @@ export const createBoxScene: CreateThreeScene = (config) => {
 
   // ==================== LIGHTS ====================
   // ... TODO
-
+  const light = new THREE.DirectionalLight(0xffffff, 0.8);
   // ============================================================================================
   // Functions
   // ============================================================================================
   const populateScene = (scene: THREE.Scene): boolean => {
     meshObjects.forEach((mesh) => scene.add(mesh));
+    scene.background = new THREE.Color(0x000070); // dark blue
+    scene.add(light);
 
     return true;
   };

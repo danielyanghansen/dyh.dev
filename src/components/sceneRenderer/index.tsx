@@ -2,6 +2,8 @@ import { ThreeSceneActions, ThreeSceneSettings } from '@/types/three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import React, { useEffect, useRef } from 'react';
 
+import '../../shared.css';
+
 import * as THREE from 'three';
 
 interface SceneRendererProps {
@@ -28,7 +30,7 @@ export const SceneRenderer: React.FC<SceneRendererProps> = (props) => {
         lookAt: new THREE.Vector3(0, 0, 0),
         position: new THREE.Vector3(5, 5, 5),
 
-        ...props.sceneActions.getCameraConfig(),
+        ...props.sceneActions.getCameraConfig?.(),
       };
 
       const camera = new THREE.PerspectiveCamera(
@@ -63,9 +65,14 @@ export const SceneRenderer: React.FC<SceneRendererProps> = (props) => {
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
       };
+      animate();
     }
   }),
     [canvasRef.current];
 
-  return <canvas ref={canvasRef} className="canvas" />;
+  return (
+    <div className={'fullscreenCanvasContainer'}>
+      <canvas className={'canvas'} ref={canvasRef}></canvas>
+    </div>
+  );
 };

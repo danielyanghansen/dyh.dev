@@ -12,10 +12,10 @@ export type ThreeSceneActions = {
   populateScene: (scene: THREE.Scene) => boolean;
   animateFrame: (t_ms?: number) => void;
   // animateFrame should called externally
-  getCameraConfig: () => ThreeCameraConfig;
 
   dispose: () => void;
 
+  getCameraConfig?: () => ThreeCameraConfig;
   resetScene?: () => void;
   reloadAssets?: () => void;
 };

@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import DefaultPage from './pages/DefaultPage';
-import NotFound from './pages/404NotFound';
-import Home from './pages/Home';
-import ModelLoaderPage from './pages/ModelLoader';
+import DefaultPage from '@/pages/DefaultPage';
+import NotFound from '@/pages/404NotFound';
+import Home from '@/pages/Home';
+import ModelLoaderPage from '@/pages/ModelLoader';
+import FunctionalityTester from '@/pages/FunctionalityTester';
 
 import './index.css';
 import { NavBar } from '@/components';
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Route path="landing" element={<DefaultPage />} />
         <Route path="model" element={<ModelLoaderPage />} />
         <Route path="grid" element={<GridPage2D />} />
+        <Route path="test" element={<FunctionalityTester />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
