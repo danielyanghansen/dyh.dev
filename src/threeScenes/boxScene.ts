@@ -69,6 +69,7 @@ export const createBoxScene: CreateThreeScene = (config) => {
     meshObjects.forEach((mesh) => mesh.geometry.dispose());
     geometryObjects.forEach((geometry) => geometry.dispose());
     materialObjects.forEach((material) => material.dispose());
+    light.dispose();
     return;
   };
 
