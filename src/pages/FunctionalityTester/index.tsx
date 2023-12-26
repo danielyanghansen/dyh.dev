@@ -1,6 +1,7 @@
 import React from 'react';
 import { SceneRenderer } from '@/components/sceneRenderer';
 import { createBoxScene } from '@/threeScenes/boxScene';
+import { createWaterScene } from '@/threeScenes/waterScene';
 import type { ThreeSceneConfig, ThreeSceneSettings } from '@/types/three';
 import { Typography } from '@mui/material';
 
@@ -12,7 +13,8 @@ const ModelLoaderPage: React.FC = () => {
     },
   };
 
-  const boxScene = createBoxScene(config);
+  //const boxScene = createBoxScene(config);
+  const waterScene = createWaterScene(config);
 
   const settings: ThreeSceneSettings = {
     enableOrbitControls: true,
@@ -34,7 +36,7 @@ const ModelLoaderPage: React.FC = () => {
         This page is just for myself to be able to test my sceneRenderer
         component
       </Typography>
-      <SceneRenderer sceneActions={boxScene} settings={settings} />
+      <SceneRenderer sceneActions={waterScene} settings={settings} />
     </>
   );
 };

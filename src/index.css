@@ -1,3 +1,6 @@
+/* Import shared styles */
+@import './shared.css';
+
 /* index.css */
 :root {
   --light-text-color: #333;
@@ -36,6 +39,3 @@ button {
     border-width: 3px;
   }
 }
-
-/* Import shared styles */
-@import './shared.css';
