@@ -33,10 +33,16 @@ const slab = new THREE.BoxGeometry(
 
 const unitBlock = new THREE.BoxGeometry(1, 1, 1);
 
-const dirtBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x8b4513 });
-const grassBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
-const stoneBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x808080 });
-const waterBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x0000ff });
+const dirtBlockMaterial = new THREE.MeshLambertMaterial({ color: 0xe0621f });
+const grassBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x86eb23 });
+const stoneBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x5c280d });
+const waterBlockMaterial = new THREE.MeshToonMaterial({
+  color: 0x1f9de0,
+  transparent: true,
+  opacity: 0.7,
+});
+
+const awaterBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x1f9de0 });
 
 const dirtSlab = new THREE.Mesh(slab, dirtBlockMaterial);
 const grassSlab = new THREE.Mesh(slab, grassBlockMaterial);
@@ -46,7 +52,11 @@ const waterSlab = new THREE.Mesh(slab, waterBlockMaterial);
 const dirtBlock = new THREE.Mesh(block, dirtBlockMaterial);
 const grassBlock = new THREE.Mesh(block, grassBlockMaterial);
 const stoneBlock = new THREE.Mesh(block, stoneBlockMaterial);
-const waterBlock = new THREE.Mesh(block, waterBlockMaterial);
+const waterBlock = new THREE.InstancedMesh(
+  block,
+  waterBlockMaterial,
+  gridInfo.divisions * gridInfo.divisions,
+);
 
 const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
   map.forEach((cell) => {
@@ -141,8 +151,15 @@ const populateNoise = (scene: THREE.Scene) => {
       });
 
       let blockToClone: THREE.Mesh;
+      let scaledNoise = noise * 10;
+
+      const nx = x * sideLengthUnit;
+      const ny = y * sideLengthUnit;
+      let nz = noise * 5 * sideLengthUnit;
       if (noise < 0.2) {
         blockToClone = waterBlock;
+        scaledNoise = 2;
+        nz = sideLengthUnit / 2;
       } else if (noise < 0.4) {
         blockToClone = dirtBlock;
       } else if (noise < 0.6) {
@@ -154,11 +171,9 @@ const populateNoise = (scene: THREE.Scene) => {
       console.log(noise);
 
       const block = blockToClone.clone();
-      const nx = x * sideLengthUnit;
-      const ny = y * sideLengthUnit;
-      const nz = noise * 5 * sideLengthUnit;
+
       block.position.set(nx - offset, 0, ny - offset);
-      block.scale.set(1, noise * 10, 1);
+      block.scale.set(1, scaledNoise, 1);
       block.position.set(nx - offset, nz, ny - offset);
       scene.add(block);
     }
@@ -235,13 +250,13 @@ export const GridCanvas: React.FC = () => {
       const light = new THREE.DirectionalLight(0xffffff, 0.8);
       light.position.copy(directionalLightPosition);
       light.castShadow = true;
-      const ambientLight = new THREE.AmbientLight(0xaaaaff, 0.8);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 
       const lanternPointLight = new THREE.PointLight(0xefc070, 100, 100);
       lanternPointLight.position.set(0, 8, 0);
 
       const addLights = (): void => {
-        scene.add(light, ambientLight, lanternPointLight);
+        scene.add(light, ambientLight);
       };
       addLights();
       disposals.push(
@@ -251,7 +266,7 @@ export const GridCanvas: React.FC = () => {
       );
 
       scene.fog = new THREE.Fog(0x000000, 1, 1000);
-      scene.background = new THREE.Color(0xaaccff);
+      scene.background = new THREE.Color(0xffe9c4);
 
       // ============================================================================================
       // Add Objects

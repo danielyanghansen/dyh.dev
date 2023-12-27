@@ -16,8 +16,8 @@ const githubURL = 'https://github.com/danielyanghansen';
 
 const backgroundImage = '/images/moxin-autumn-river-1.png'; // Update the path accordingly
 
+// TODO: Move these to a theme file
 const defaultBgColor = '#58202076';
-
 const defaultBorderColor = '3px  solid #ed636377';
 
 export const AboutMeCard: React.FC = () => {
