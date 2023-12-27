@@ -52,11 +52,7 @@ const waterSlab = new THREE.Mesh(slab, waterBlockMaterial);
 const dirtBlock = new THREE.Mesh(block, dirtBlockMaterial);
 const grassBlock = new THREE.Mesh(block, grassBlockMaterial);
 const stoneBlock = new THREE.Mesh(block, stoneBlockMaterial);
-const waterBlock = new THREE.InstancedMesh(
-  block,
-  waterBlockMaterial,
-  gridInfo.divisions * gridInfo.divisions,
-);
+const waterBlock = new THREE.Mesh(block, waterBlockMaterial);
 
 const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
   map.forEach((cell) => {
@@ -159,7 +155,7 @@ const populateNoise = (scene: THREE.Scene) => {
       if (noise < 0.2) {
         blockToClone = waterBlock;
         scaledNoise = 2;
-        nz = sideLengthUnit / 2;
+        nz = sideLengthUnit;
       } else if (noise < 0.4) {
         blockToClone = dirtBlock;
       } else if (noise < 0.6) {
@@ -167,8 +163,6 @@ const populateNoise = (scene: THREE.Scene) => {
       } else {
         blockToClone = stoneBlock;
       }
-
-      console.log(noise);
 
       const block = blockToClone.clone();
 
