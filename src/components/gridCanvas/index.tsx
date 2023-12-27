@@ -12,8 +12,6 @@ import {
   noiseFunctor,
 } from './gridUtils';
 
-import BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-
 import '../../shared.css';
 
 const cameraDefaultPosition = new THREE.Vector3(10, 10, 10);
@@ -33,16 +31,18 @@ const slab = new THREE.BoxGeometry(
   1 * sideLengthUnit,
 );
 
+const unitBlock = new THREE.BoxGeometry(1, 1, 1);
+
 const dirtBlockMaterial = new THREE.MeshLambertMaterial({ color: 0xe0621f });
 const grassBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x86eb23 });
 const stoneBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x5c280d });
-const toonWaterBlockMaterial = new THREE.MeshToonMaterial({
+const waterBlockMaterial = new THREE.MeshToonMaterial({
   color: 0x1f9de0,
   transparent: true,
   opacity: 0.7,
 });
 
-const waterBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x1f9de0 });
+const awaterBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x1f9de0 });
 
 const dirtSlab = new THREE.Mesh(slab, dirtBlockMaterial);
 const grassSlab = new THREE.Mesh(slab, grassBlockMaterial);
@@ -52,12 +52,11 @@ const waterSlab = new THREE.Mesh(slab, waterBlockMaterial);
 const dirtBlock = new THREE.Mesh(block, dirtBlockMaterial);
 const grassBlock = new THREE.Mesh(block, grassBlockMaterial);
 const stoneBlock = new THREE.Mesh(block, stoneBlockMaterial);
-const waterBlock = new THREE.Mesh(block, waterBlockMaterial);
-
-const dirtBlockBuffer: THREE.BufferGeometry[] = [];
-const grassBlockBuffer: THREE.BufferGeometry[] = [];
-const stoneBlockBuffer: THREE.BufferGeometry[] = [];
-const waterBlockBuffer: THREE.BufferGeometry[] = [];
+const waterBlock = new THREE.InstancedMesh(
+  block,
+  waterBlockMaterial,
+  gridInfo.divisions * gridInfo.divisions,
+);
 
 const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
   map.forEach((cell) => {
@@ -160,7 +159,7 @@ const populateNoise = (scene: THREE.Scene) => {
       if (noise < 0.2) {
         blockToClone = waterBlock;
         scaledNoise = 2;
-        nz = sideLengthUnit;
+        nz = sideLengthUnit / 2;
       } else if (noise < 0.4) {
         blockToClone = dirtBlock;
       } else if (noise < 0.6) {
@@ -176,43 +175,9 @@ const populateNoise = (scene: THREE.Scene) => {
       block.position.set(nx - offset, 0, ny - offset);
       block.scale.set(1, scaledNoise, 1);
       block.position.set(nx - offset, nz, ny - offset);
-
-      let buffer: THREE.BufferGeometry[];
-      switch (blockToClone) {
-        case dirtBlock:
-          buffer = dirtBlockBuffer;
-          break;
-        case grassBlock:
-          buffer = grassBlockBuffer;
-          break;
-        case stoneBlock:
-          buffer = stoneBlockBuffer;
-          break;
-        case waterBlock:
-        default:
-          buffer = waterBlockBuffer;
-          break;
-      }
-      buffer.push(block.geometry);
+      scene.add(block);
     }
   }
-  const addBuffersWithMaterial = (
-    buffer: THREE.BufferGeometry[],
-    material: THREE.Material,
-  ) => {
-    const mergedBuffer = BufferGeometryUtils.mergeGeometries(buffer);
-    const mergedMesh = new THREE.Mesh(mergedBuffer, material);
-    scene.add(mergedMesh);
-    buffer.forEach((b) => {
-      b.dispose();
-    });
-    buffer.length = 0;
-  };
-
-  addBuffersWithMaterial(dirtBlockBuffer, dirtBlockMaterial);
-  addBuffersWithMaterial(grassBlockBuffer, grassBlockMaterial);
-  addBuffersWithMaterial(stoneBlockBuffer, stoneBlockMaterial);
-  addBuffersWithMaterial(waterBlockBuffer, waterBlockMaterial);
 };
 
 //enable shadows
