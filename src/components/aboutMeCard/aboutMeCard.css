@@ -7,7 +7,3 @@
   margin-top: 10px;
   text-align: center;
 }
-
-CardContent.Typography {
-  color: purple; /*TODO: Put in terms of global styles / colors from shared.css */
-}

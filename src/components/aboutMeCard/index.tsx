@@ -18,7 +18,7 @@ const backgroundImage = '/images/moxin-autumn-river-1.png'; // Update the path a
 
 // TODO: Move these to a theme file
 const defaultBgColor = '#58202076';
-const defaultBorderColor = '3px  solid #ed636377';
+const defaultBorderColor = '2px  solid #ed636377';
 
 export const AboutMeCard: React.FC = () => {
   return (
@@ -35,18 +35,17 @@ export const AboutMeCard: React.FC = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
 
-          border: '3px  solid #fd6363',
+          border: '2px  solid black',
         }}
         className="card"
       >
         <CardHeader
-          title="Hello there!"
+          title="HELLO THERE!"
           sx={{
             color: 'white',
+            font: 'monospace',
             fontWeight: 'bold',
-            backgroundColor: defaultBgColor,
-            borderRadius: 3,
-            border: defaultBorderColor,
+            textShadow: '2px 2px 2px maroon',
           }}
         />
         <CardMedia
@@ -69,6 +68,7 @@ export const AboutMeCard: React.FC = () => {
             backgroundColor: defaultBgColor,
             borderRadius: 3,
             color: 'white',
+            textShadow: '2px 2px 2px maroon',
             border: defaultBorderColor,
           }}
         >

@@ -37,10 +37,7 @@
   font-weight: 500;
   font-family: inherit;
   text-decoration: none;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 200% 200%;
-  animation: gradient 15s ease infinite;
-  border: 3px solid #1a1a1a50;
+  border: 3px solid black;
   border-top: 0;
   border-radius: 0em 0em 0em 50em;
 
@@ -48,7 +45,7 @@
 }
 
 .navLink {
-  color: white;
+  color: black;
   font-size: 3em;
   font-weight: 500;
   font-family: monospace;
@@ -56,17 +53,15 @@
 
   z-index: 100;
 }
+:hover {
+  color: maroon;
+}
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.logoPicture {
+  height: 80px;
+  width: 80px;
+  border: 3px solid black;
+  border-radius: 1rem;
 }
 
 .pullDownContainer {
@@ -83,17 +78,15 @@
   padding: 0 1.5em;
   height: 2em;
   width: 8em;
-  color: white;
+  color: maroon;
   font-size: 1.2em;
+  text-shadow: 1px 2px 3px black;
 
   font-family: inherit;
   text-decoration: solid;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
 
   border-radius: 0em 0em 3em 3em;
-  border: 2px solid #1a1a1a50;
+  border: 2px solid black;
   border-top: 0;
 
   z-index: 100;

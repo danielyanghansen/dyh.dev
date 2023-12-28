@@ -5,7 +5,7 @@
   --text-color: #333;
   --background-color: #dbdbdb;
   --link-color: var(--primary-color);
-  --link-hover-color: #808080;
+  --link-hover-color: maroon;
   --button-background: #1a1a1a;
   --button-border: #646cff;
   --button-hover-border: #646cff;
@@ -17,7 +17,7 @@
   --text-color: ##cccccc;
   --background-color: #242424;
   --link-color: var(--primary-color);
-  --link-hover-color: 7f7f7f;
+  --link-hover-color: maroon;
   --button-background: ##e5e5e5;
   --button-border: ##9b9300;
   --button-hover-border: ##9b9300;
