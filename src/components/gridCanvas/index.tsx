@@ -25,114 +25,57 @@ const block = new THREE.BoxGeometry(
   1 * sideLengthUnit,
   1 * sideLengthUnit,
 );
-const slab = new THREE.BoxGeometry(
-  1 * sideLengthUnit,
-  0.5 * sideLengthUnit,
-  1 * sideLengthUnit,
+
+const waterFieldGeometry = new THREE.BoxGeometry(
+  gridInfo.size + 0.1,
+  2 * sideLengthUnit,
+  gridInfo.size + 0.1,
 );
 
-const unitBlock = new THREE.BoxGeometry(1, 1, 1);
+const wallPlusCornerGeometry = new THREE.BoxGeometry(
+  1 * sideLengthUnit,
+  4 * sideLengthUnit,
+  (gridInfo.divisions + 2) * sideLengthUnit,
+);
+
+const sideWallGeometry = new THREE.BoxGeometry(
+  gridInfo.divisions * sideLengthUnit,
+  4 * sideLengthUnit,
+  1 * sideLengthUnit,
+);
 
 const dirtBlockMaterial = new THREE.MeshLambertMaterial({ color: 0xe0621f });
 const grassBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x86eb23 });
 const stoneBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x5c280d });
+const sandBlockMaterial = new THREE.MeshLambertMaterial({ color: 0xc2b280 });
 const waterBlockMaterial = new THREE.MeshToonMaterial({
   color: 0x1f9de0,
   transparent: true,
   opacity: 0.7,
 });
 
-const awaterBlockMaterial = new THREE.MeshLambertMaterial({ color: 0x1f9de0 });
-
-const dirtSlab = new THREE.Mesh(slab, dirtBlockMaterial);
-const grassSlab = new THREE.Mesh(slab, grassBlockMaterial);
-const stoneSlab = new THREE.Mesh(slab, stoneBlockMaterial);
-const waterSlab = new THREE.Mesh(slab, waterBlockMaterial);
+const wallMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
 
 const dirtBlock = new THREE.Mesh(block, dirtBlockMaterial);
 const grassBlock = new THREE.Mesh(block, grassBlockMaterial);
 const stoneBlock = new THREE.Mesh(block, stoneBlockMaterial);
-const waterBlock = new THREE.Mesh(block, waterBlockMaterial);
+const sandBlock = new THREE.Mesh(block, sandBlockMaterial);
 
-const populate = (scene: THREE.Scene, map: Array<CellProps>) => {
-  map.forEach((cell) => {
-    const cellX = cell.coords.x;
-    const cellY = cell.coords.y;
-    let heightLikeY = 0;
+const waterField = new THREE.Mesh(waterFieldGeometry, waterBlockMaterial);
 
-    cell.blockStack.forEach((blockVariant) => {
-      switch (blockVariant) {
-        case 'dirtSlab':
-        case 'grassSlab':
-        case 'stoneSlab':
-        case 'waterSlab':
-          heightLikeY += 0.25 * sideLengthUnit;
-          break;
-        default:
-          heightLikeY += sideLengthUnit / 2;
-          break;
-      }
-      switch (blockVariant) {
-        case 'dirtBlock':
-          const dirtBlockClone = dirtBlock.clone();
-          dirtBlockClone.position.set(cellX, heightLikeY, cellY);
-          scene.add(dirtBlockClone);
-          break;
-        case 'grassBlock':
-          const grassBlockClone = grassBlock.clone();
-          grassBlockClone.position.set(cellX, heightLikeY, cellY);
-          scene.add(grassBlockClone);
-          break;
-        case 'stoneBlock':
-          const stoneBlockClone = stoneBlock.clone();
-          stoneBlockClone.position.set(cellX, heightLikeY, cellY);
-          scene.add(stoneBlockClone);
-          break;
-        case 'waterBlock':
-          const waterBlockClone = waterBlock.clone();
-          waterBlockClone.position.set(cellX, heightLikeY, cellY);
-          scene.add(waterBlockClone);
-          break;
-        case 'dirtSlab':
-          const dirtSlabClone = dirtSlab.clone();
-          dirtSlabClone.position.set(cellX, heightLikeY, cellY);
-          scene.add(dirtSlabClone);
-          break;
-        case 'grassSlab':
-          const grassSlabClone = grassSlab.clone();
-          grassSlabClone.position.set(cellX, heightLikeY, cellY);
-          scene.add(grassSlabClone);
-          break;
-        case 'stoneSlab':
-          const stoneSlabClone = stoneSlab.clone();
-          stoneSlabClone.position.set(cellX, heightLikeY, cellY);
-          scene.add(stoneSlabClone);
-          break;
-        case 'waterSlab':
-          const waterSlabClone = waterSlab.clone();
-          waterSlabClone.position.set(cellX, heightLikeY, cellY);
-          scene.add(waterSlabClone);
-          break;
-      }
-      switch (blockVariant) {
-        case 'dirtBlock':
-        case 'grassBlock':
-        case 'stoneBlock':
-        case 'waterBlock':
-          heightLikeY += sideLengthUnit / 2;
-          break;
-        case 'dirtSlab':
-        case 'grassSlab':
-        case 'stoneSlab':
-        case 'waterSlab':
-          heightLikeY += 0.25 * sideLengthUnit;
-          break;
-      }
-    });
-  });
-};
+const wallOffset = ((gridInfo.divisions + 1) * sideLengthUnit) / 2;
+const northWall = new THREE.Mesh(wallPlusCornerGeometry, wallMaterial);
+northWall.position.set(wallOffset, 0, 0);
+const southWall = new THREE.Mesh(wallPlusCornerGeometry, wallMaterial);
+southWall.position.set(-wallOffset, 0, 0);
+const eastWall = new THREE.Mesh(sideWallGeometry, wallMaterial);
+eastWall.position.set(0, 0, wallOffset);
+const westWall = new THREE.Mesh(sideWallGeometry, wallMaterial);
+westWall.position.set(0, 0, -wallOffset);
 
 const populateNoise = (scene: THREE.Scene) => {
+  scene.add(waterField);
+  scene.add(northWall, southWall, eastWall, westWall);
   for (let x = 0; x <= gridInfo.divisions; x++) {
     for (let y = 0; y <= gridInfo.divisions; y++) {
       const noise = noiseFunctor({
@@ -147,15 +90,10 @@ const populateNoise = (scene: THREE.Scene) => {
       });
 
       let blockToClone: THREE.Mesh;
-      let scaledNoise = noise * 10;
-
-      const nx = x * sideLengthUnit;
-      const ny = y * sideLengthUnit;
-      let nz = noise * 5 * sideLengthUnit;
-      if (noise < 0.2) {
-        blockToClone = waterBlock;
-        scaledNoise = 2;
-        nz = sideLengthUnit;
+      if (noise < 0.1) {
+        continue;
+      } else if (noise < 0.2) {
+        blockToClone = sandBlock;
       } else if (noise < 0.4) {
         blockToClone = dirtBlock;
       } else if (noise < 0.6) {
@@ -166,7 +104,12 @@ const populateNoise = (scene: THREE.Scene) => {
 
       const block = blockToClone.clone();
 
-      block.position.set(nx - offset, 0, ny - offset);
+      const scaledNoise = noise * 10;
+
+      const nx = x * sideLengthUnit;
+      const ny = y * sideLengthUnit;
+      const nz = noise * 5 * sideLengthUnit;
+
       block.scale.set(1, scaledNoise, 1);
       block.position.set(nx - offset, nz, ny - offset);
       scene.add(block);
@@ -260,7 +203,7 @@ export const GridCanvas: React.FC = () => {
       );
 
       scene.fog = new THREE.Fog(0x000000, 1, 1000);
-      scene.background = new THREE.Color(0xffe9c4);
+      scene.background = new THREE.Color(0xffffff);
 
       // ============================================================================================
       // Add Objects

@@ -12,7 +12,7 @@ export const gridInfo = {
 
 export const sideLengthUnit = gridInfo.size / gridInfo.divisions;
 
-export const offset = gridInfo.size / 2; //(gridInfo.size* ratio - ratio) / 2;
+export const offset = (gridInfo.size + sideLengthUnit) / 2; //(gridInfo.size* ratio - ratio) / 2;
 
 export type BlockVariant =
   | 'dirtBlock'
