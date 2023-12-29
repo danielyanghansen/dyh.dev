@@ -94,7 +94,7 @@ const populateNoise = (scene: THREE.Scene) => {
   for (let x = 0; x < noiseTable.metadata.width; x++) {
     for (let y = 0; y < noiseTable.metadata.height; y++) {
       const noise = noiseTable.functions.getElement(x, y); // Is a little slow, but not too bad. Rather slow than hard to read
-      if (noise < 0.1) {
+      if (noise < 0.01) {
         continue;
       } else if (noise < 0.2) {
         blockToClone = sandBlock;
