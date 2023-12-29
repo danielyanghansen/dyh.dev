@@ -4,15 +4,15 @@ import {
 } from '@/utils/terrainGeneration';
 import * as THREE from 'three';
 
-export const gridInfo = {
+export const gridSpecification = {
   // Keep the ration 1 to 1 for now
   size: 16,
   divisions: 32,
 };
 
-export const sideLengthUnit = gridInfo.size / gridInfo.divisions;
+export const sideLengthUnit = gridSpecification.size / gridSpecification.divisions;
 
-export const offset = (gridInfo.size + sideLengthUnit) / 2; //(gridInfo.size* ratio - ratio) / 2;
+export const offset = (gridSpecification.size + sideLengthUnit) / 2; //(gridInfo.size* ratio - ratio) / 2;
 
 export type BlockVariant =
   | 'dirtBlock'
@@ -40,8 +40,8 @@ export const noiseFunctor = createNoiseFunctor({
 
 //TODO: Make this a generator, fix code smell, and make the signature GridInfo2D<number> => (Array<CellProps> | GridInfo2D<Array<BlockVariant>>)  (or something like that)
 export const fillMap = (map: Array<CellProps>): void => {
-  for (let xIndex = 0; xIndex < gridInfo.divisions; xIndex++) {
-    for (let zIndex = 0; zIndex < gridInfo.divisions; zIndex++) {
+  for (let xIndex = 0; xIndex < gridSpecification.divisions; xIndex++) {
+    for (let zIndex = 0; zIndex < gridSpecification.divisions; zIndex++) {
       const x = xIndex * sideLengthUnit - offset + sideLengthUnit / 2;
       const z = zIndex * sideLengthUnit - offset + sideLengthUnit / 2;
 
@@ -51,8 +51,8 @@ export const fillMap = (map: Array<CellProps>): void => {
           z,
         },
         maxValues: {
-          x: gridInfo.divisions,
-          z: gridInfo.divisions,
+          x: gridSpecification.divisions,
+          z: gridSpecification.divisions,
         },
       };
       const noise = noiseFunctor(noiseProps);

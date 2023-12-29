@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import {
-  gridInfo,
+  gridSpecification,
   sideLengthUnit,
   offset,
   fillMap,
@@ -18,7 +18,7 @@ const cameraDefaultPosition = new THREE.Vector3(10, 10, 10);
 const directionalLightPosition = new THREE.Vector3(20, -20, 20);
 
 const map: Array<CellProps> = [];
-const gridHelper = new THREE.GridHelper(gridInfo.size, gridInfo.divisions);
+const gridHelper = new THREE.GridHelper(gridSpecification.size, gridSpecification.divisions);
 
 const block = new THREE.BoxGeometry(
   1 * sideLengthUnit,
@@ -27,19 +27,19 @@ const block = new THREE.BoxGeometry(
 );
 
 const waterFieldGeometry = new THREE.BoxGeometry(
-  gridInfo.size + 0.1,
+  gridSpecification.size + 0.1,
   2 * sideLengthUnit,
-  gridInfo.size + 0.1,
+  gridSpecification.size + 0.1,
 );
 
 const wallPlusCornerGeometry = new THREE.BoxGeometry(
   1 * sideLengthUnit,
   4 * sideLengthUnit,
-  (gridInfo.divisions + 2) * sideLengthUnit,
+  (gridSpecification.divisions + 2) * sideLengthUnit,
 );
 
 const sideWallGeometry = new THREE.BoxGeometry(
-  gridInfo.divisions * sideLengthUnit,
+  gridSpecification.divisions * sideLengthUnit,
   4 * sideLengthUnit,
   1 * sideLengthUnit,
 );
@@ -63,7 +63,7 @@ const sandBlock = new THREE.Mesh(block, sandBlockMaterial);
 
 const waterField = new THREE.Mesh(waterFieldGeometry, waterBlockMaterial);
 
-const wallOffset = ((gridInfo.divisions + 1) * sideLengthUnit) / 2;
+const wallOffset = ((gridSpecification.divisions + 1) * sideLengthUnit) / 2;
 const northWall = new THREE.Mesh(wallPlusCornerGeometry, wallMaterial);
 northWall.position.set(wallOffset, 0, 0);
 const southWall = new THREE.Mesh(wallPlusCornerGeometry, wallMaterial);
@@ -78,8 +78,8 @@ westWall.position.set(0, 0, -wallOffset);
 const populateNoise = (scene: THREE.Scene) => {
   scene.add(waterField);
   scene.add(northWall, southWall, eastWall, westWall);
-  for (let x = 1; x <= gridInfo.divisions; x++) {
-    for (let y = 1; y <= gridInfo.divisions; y++) {
+  for (let x = 1; x <= gridSpecification.divisions; x++) {
+    for (let y = 1; y <= gridSpecification.divisions; y++) {
       // Note, running x,y from 1 to divisions, not 0 to divisions - 1
       // This is just for convenience, so that the coordinates match the map array
       const noise = noiseFunctor({
@@ -88,8 +88,8 @@ const populateNoise = (scene: THREE.Scene) => {
           z: y,
         },
         maxValues: {
-          x: gridInfo.divisions,
-          z: gridInfo.divisions,
+          x: gridSpecification.divisions,
+          z: gridSpecification.divisions,
         },
       });
 
