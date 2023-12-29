@@ -7,7 +7,7 @@ import * as THREE from 'three';
 export const gridInfo = {
   // Keep the ration 1 to 1 for now
   size: 16,
-  divisions: 48,
+  divisions: 32,
 };
 
 export const sideLengthUnit = gridInfo.size / gridInfo.divisions;

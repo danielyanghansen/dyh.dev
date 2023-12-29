@@ -73,11 +73,15 @@ eastWall.position.set(0, 0, wallOffset);
 const westWall = new THREE.Mesh(sideWallGeometry, wallMaterial);
 westWall.position.set(0, 0, -wallOffset);
 
+// TODO: This needs to be split into two functions, one for the map and one for the noise
+// This is to maintain the SRP
 const populateNoise = (scene: THREE.Scene) => {
   scene.add(waterField);
   scene.add(northWall, southWall, eastWall, westWall);
-  for (let x = 0; x <= gridInfo.divisions; x++) {
-    for (let y = 0; y <= gridInfo.divisions; y++) {
+  for (let x = 1; x <= gridInfo.divisions; x++) {
+    for (let y = 1; y <= gridInfo.divisions; y++) {
+      // Note, running x,y from 1 to divisions, not 0 to divisions - 1
+      // This is just for convenience, so that the coordinates match the map array
       const noise = noiseFunctor({
         coords: {
           x,
