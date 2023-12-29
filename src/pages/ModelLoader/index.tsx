@@ -92,7 +92,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
       // ============================================================================================
 
       loader.load(
-        'casa.glb',
+        'models/glb/casa.glb',
         (gltf) => {
           gltf.scene.scale.copy(modelScale);
           gltf.scene.castShadow = true;
@@ -106,7 +106,7 @@ const ModelLoaderPage: React.FC<PageProps> = () => {
         },
       );
       loader.load(
-        'truck_long.glb',
+        'models/glb/truck_long.glb',
         (gltf) => {
           gltf.scene.castShadow = true;
           gltf.scene.scale.copy(carScale);
