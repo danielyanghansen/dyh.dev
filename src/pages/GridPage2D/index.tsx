@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import txGrass from '@/assets/TX_Tileset_Grass.png';
 import txStoneGround from '@/assets/TX_Tileset_Stone_Ground.png';
 
-type AtlasInfo = {
+interface AtlasInfo {
   name: string;
   url: string;
   widthInTiles: number;
   heightInTiles: number;
   tileStride: number;
-};
+}
 
 const atlases: AtlasInfo[] = [
   {
@@ -32,7 +32,7 @@ const atlases: AtlasInfo[] = [
 const SingleAtlasDisplay: React.FC<
   AtlasInfo & { scale?: number; selectedTile?: { x: number; y: number } }
 > = ({
-  //name,
+  // name,
   url,
   widthInTiles,
   heightInTiles,
@@ -83,9 +83,9 @@ const SingleAtlasDisplay: React.FC<
   );
 };
 
-type AtlasDisplaysProps = {
+interface AtlasDisplaysProps {
   atlases: AtlasInfo[];
-};
+}
 
 const AtlasDisplays: React.FC<AtlasDisplaysProps> = ({ atlases }) => {
   return (
@@ -170,14 +170,14 @@ const gridProps: {
   numCols: 4,
 };
 
-type RandomGridProps = {
+interface RandomGridProps {
   sideLengthInPixels: number;
   numRows: number;
   numCols: number;
   disableGridLines?: boolean;
   overrideSideLength?: string;
   retrieveSelectedTile?: () => void;
-};
+}
 
 const RandomGrid: React.FC<RandomGridProps> = ({
   sideLengthInPixels,

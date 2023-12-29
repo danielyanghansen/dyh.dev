@@ -4,7 +4,6 @@ import {
   List,
   ListItemText,
   ListItemButton,
-  ListSubheader,
   ListItemIcon,
   Collapse,
   Divider,

@@ -1,9 +1,9 @@
-import { GridInfo2D } from '@/types/grid';
+import type { GridInfo2D } from '@/types/grid';
 import { compose } from 'redux';
-import { createNoise2D, createNoise3D } from 'simplex-noise';
+import { createNoise2D } from 'simplex-noise';
 import { seededRandom } from 'three/src/math/MathUtils.js';
 
-export const DEFAULT_EXTRA_OCTAVES: Array<OctaveParams> = [
+export const DEFAULT_EXTRA_OCTAVES: OctaveParams[] = [
   {
     frequency: 2,
     weight: 0.5,
@@ -14,7 +14,7 @@ export const DEFAULT_EXTRA_OCTAVES: Array<OctaveParams> = [
   },
 ];
 
-export type NoiseFunctorInput = {
+export interface NoiseFunctorInput {
   coords: {
     x: number;
     z: number;
@@ -23,7 +23,7 @@ export type NoiseFunctorInput = {
     x: number;
     z: number;
   };
-};
+}
 
 /**
  * NoiseFunctor is a function that takes in a NoiseFunctorInput and SHOULD return a number between 0 and 1
@@ -43,17 +43,17 @@ export type NoiseFunctor = (input: NoiseFunctorInput) => number;
  */
 type NoiseFunctorGenerator = (noiseParams: NoiseParams) => NoiseFunctor;
 
-export type OctaveParams = {
+export interface OctaveParams {
   frequency: number;
   weight: number;
-};
+}
 
-export type NoiseParams = {
+export interface NoiseParams {
   redistribution: number;
   baseOctave: OctaveParams;
   randomSeed?: number;
-  extraOctaves?: Array<OctaveParams>;
-};
+  extraOctaves?: OctaveParams[];
+}
 
 export const createNoiseFunctor: NoiseFunctorGenerator = (
   noiseParams: NoiseParams,

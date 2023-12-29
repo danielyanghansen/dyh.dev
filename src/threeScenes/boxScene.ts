@@ -1,7 +1,7 @@
 import {
-  CreateThreeScene,
-  ThreeCameraConfig,
-  ThreeSceneActions,
+  type CreateThreeScene,
+  type ThreeCameraConfig,
+  type ThreeSceneActions,
 } from '@/types/three';
 import * as THREE from 'three';
 
@@ -9,16 +9,15 @@ export const createBoxScene: CreateThreeScene = (config) => {
   // ============================================================================================
   // CONFIG
   // ============================================================================================
-  const cameraConfig: ThreeCameraConfig =
-    {
-      configParams: {
-        fov: 75,
-        near: 0.1,
-        far: 1000,
-      },
-      position: new THREE.Vector3(5, 5, 5),
-      lookAt: new THREE.Vector3(0, 0, 0),
-    } || config.camera;
+  const cameraConfig: ThreeCameraConfig = config.camera ?? {
+    configParams: {
+      fov: 75,
+      near: 0.1,
+      far: 1000,
+    },
+    position: new THREE.Vector3(5, 5, 5),
+    lookAt: new THREE.Vector3(0, 0, 0),
+  };
 
   // ============================================================================================
   // Disposable asset arrays
@@ -57,20 +56,27 @@ export const createBoxScene: CreateThreeScene = (config) => {
     return true;
   };
 
-  const getCameraConfig = () => {
+  const getCameraConfig = (): ThreeCameraConfig => {
     return cameraConfig;
   };
 
-  const animateFrame = (t_ms?: number) => {
-    return;
-  };
+  /**
+   *
+   * @param t Time in milliseconds
+   */
+  const animateFrame = (t?: number): void => {};
 
-  const dispose = () => {
-    meshObjects.forEach((mesh) => mesh.geometry.dispose());
-    geometryObjects.forEach((geometry) => geometry.dispose());
-    materialObjects.forEach((material) => material.dispose());
+  const dispose = (): void => {
+    meshObjects.forEach((mesh) => {
+      mesh.geometry.dispose();
+    });
+    geometryObjects.forEach((geometry) => {
+      geometry.dispose();
+    });
+    materialObjects.forEach((material) => {
+      material.dispose();
+    });
     light.dispose();
-    return;
   };
 
   const returnActions: ThreeSceneActions = {

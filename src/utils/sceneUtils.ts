@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import type * as THREE from 'three';
 
 export const clearScene = (scene: THREE.Scene): void => {
   while (scene.children.length > 0) {

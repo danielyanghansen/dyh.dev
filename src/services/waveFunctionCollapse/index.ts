@@ -77,7 +77,7 @@ export const wfcGridCollapseIteration = <T>(
     return rule.direction === GridDirection.Right;
   });
 
-  const frontier: WfcCell<T>[] = [];
+  const frontier: Array<WfcCell<T>> = [];
   const collapsedCells = [
     grid[cellWithLowestEntropy.x][cellWithLowestEntropy.y],
   ];
@@ -86,12 +86,12 @@ export const wfcGridCollapseIteration = <T>(
    * Iteratively fill the frontier with new cells
    * @returns a boolean indicating whether or not the frontier was changed in this iteration
    */
-  const fillFrontierIteration = (collapsedCells: WfcCell<T>[]) => {
+  const fillFrontierIteration = (collapsedCells: Array<WfcCell<T>>) => {
     let changed = false;
 
     const getNextWeightedPossibilities = (
       originCell: WfcCell<T>,
-      rules: WfcRuleBase<T>[],
+      rules: Array<WfcRuleBase<T>>,
     ): Array<WeightedOption<T>> => {
       const newPossibleValuesNotJoined: Array<WeightedOption<T>> =
         originCell.possibleValues.flatMap((weightedOption) => {
@@ -133,8 +133,8 @@ export const wfcGridCollapseIteration = <T>(
       cell: WfcCell<T>,
       nextX: number,
       nextY: number,
-      rules: WfcRuleBase<T>[],
-    ) => {
+      rules: Array<WfcRuleBase<T>>,
+    ): void => {
       if (
         !cell.hasFinalValue &&
         !frontier.includes(grid[nextX][nextY]) &&

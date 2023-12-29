@@ -1,4 +1,4 @@
-import {
+import type {
   CreateThreeScene,
   ThreeCameraConfig,
   ThreeSceneActions,
@@ -11,16 +11,15 @@ export const createWaterScene: CreateThreeScene = (config) => {
   // ============================================================================================
   // CONFIG
   // ============================================================================================
-  const cameraConfig: ThreeCameraConfig =
-    {
-      configParams: {
-        fov: 75,
-        near: 0.1,
-        far: 1000,
-      },
-      position: new THREE.Vector3(50, 50, 5),
-      lookAt: new THREE.Vector3(0, 0, 0),
-    } || config.camera;
+  const cameraConfig: ThreeCameraConfig = config.camera ?? {
+    configParams: {
+      fov: 75,
+      near: 0.1,
+      far: 1000,
+    },
+    position: new THREE.Vector3(50, 50, 5),
+    lookAt: new THREE.Vector3(0, 0, 0),
+  };
 
   // ============================================================================================
   // Disposable asset arrays
@@ -54,7 +53,9 @@ export const createWaterScene: CreateThreeScene = (config) => {
 
   const islandGeometry = BufferGeometryUtils.mergeGeometries(geometries);
 
-  geometries.forEach((geometry) => geometry.dispose());
+  geometries.forEach((geometry) => {
+    geometry.dispose();
+  });
 
   const grassMaterial = new THREE.MeshLambertMaterial({ color: 0x23e553 });
 
@@ -109,22 +110,35 @@ export const createWaterScene: CreateThreeScene = (config) => {
     return true;
   };
 
-  const getCameraConfig = () => {
+  const getCameraConfig = (): ThreeCameraConfig => {
     return cameraConfig;
   };
 
-  const animateFrame = (t_ms?: number) => {
-    return;
+  /**
+   *
+   * @param t - time in milliseconds
+   * @returns
+   */
+  const animateFrame = (t?: number): void => {
+    // TODO: Implement animation
+    console.log('Animating frame at time: ', t);
   };
 
-  const dispose = () => {
-    meshObjects.forEach((mesh) => mesh.geometry.dispose());
-    geometryObjects.forEach((geometry) => geometry.dispose());
-    materialObjects.forEach((material) => material.dispose());
-    lightObjects.forEach((light) => light.dispose());
+  const dispose = (): void => {
+    meshObjects.forEach((mesh) => {
+      mesh.geometry.dispose();
+    });
+    geometryObjects.forEach((geometry) => {
+      geometry.dispose();
+    });
+    materialObjects.forEach((material) => {
+      material.dispose();
+    });
+    lightObjects.forEach((light) => {
+      light.dispose();
+    });
     gridHelper.dispose();
     axesHelper.dispose();
-    return;
   };
 
   const returnActions: ThreeSceneActions = {

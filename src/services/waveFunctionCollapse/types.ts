@@ -1,25 +1,25 @@
-import { GridDirection } from '@/types/grid';
+import { type GridDirection } from '@/types/grid';
 
-export type WeightedOption<T> = {
+export interface WeightedOption<T> {
   value: T;
   weight: number;
-};
+}
 
-export type WfcCell<T> = {
+export interface WfcCell<T> {
   hasFinalValue: boolean;
   finalValue: T | undefined;
   possibleValues: Array<WeightedOption<T>>;
   entropy: number;
   x: number;
   y: number;
-};
+}
 
-type GridInfo<T> = {
+interface GridInfo<T> {
   width: number;
   height: number;
 
   grid: Array<Array<WfcCell<T>>>;
-};
+}
 
 /**
  * A WFC grid is a grid with a set of rules for each tile
@@ -31,11 +31,11 @@ export type WfcGridInfo<T> = GridInfo<T> & {
   rules: Array<WfcTileRuleset<T>>;
 };
 
-export type WfcChoice<T> = {
+export interface WfcChoice<T> {
   x: number;
   y: number;
   value: T;
-};
+}
 
 export type CalculateEntropy = <T>(
   weightedPossibilities: Array<WeightedOption<T>>,
@@ -46,19 +46,19 @@ export type SelectOption = <T>(
 ) => T;
 
 // Note: Currenlty, the WFC algorithm only supports 2D grids, and a rule distance of 1
-export type WfcRuleBase<T> = {
+export interface WfcRuleBase<T> {
   direction: GridDirection;
   weightedPossibilities: Array<WeightedOption<T>>;
-};
+}
 
 export type WfcRule<T> = WfcRuleBase<T> & {
   tileOrigin: T;
 };
 
-export type WfcTileRuleset<T> = {
+export interface WfcTileRuleset<T> {
   tileOrigin: T;
-  rules: WfcRuleBase<T>[];
-};
+  rules: Array<WfcRuleBase<T>>;
+}
 
 export type WfcRuleFunction = <T>(
   gridInfo: GridInfo<T>,

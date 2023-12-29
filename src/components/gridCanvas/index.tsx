@@ -7,18 +7,21 @@ import {
   gridSpecification,
   sideLengthUnit,
   offset,
-  fillMap,
   type CellProps,
   noiseFunctor,
+  createNoiseGridInfo2D,
 } from './gridUtils';
 
 import '../../shared.css';
+import { type GridInfo2D } from '@/types/grid';
 
 const cameraDefaultPosition = new THREE.Vector3(10, 10, 10);
 const directionalLightPosition = new THREE.Vector3(20, -20, 20);
 
-const map: Array<CellProps> = [];
-const gridHelper = new THREE.GridHelper(gridSpecification.size, gridSpecification.divisions);
+const gridHelper = new THREE.GridHelper(
+  gridSpecification.size,
+  gridSpecification.divisions,
+);
 
 const block = new THREE.BoxGeometry(
   1 * sideLengthUnit,
@@ -78,22 +81,19 @@ westWall.position.set(0, 0, -wallOffset);
 const populateNoise = (scene: THREE.Scene) => {
   scene.add(waterField);
   scene.add(northWall, southWall, eastWall, westWall);
-  for (let x = 1; x <= gridSpecification.divisions; x++) {
-    for (let y = 1; y <= gridSpecification.divisions; y++) {
-      // Note, running x,y from 1 to divisions, not 0 to divisions - 1
-      // This is just for convenience, so that the coordinates match the map array
-      const noise = noiseFunctor({
-        coords: {
-          x,
-          z: y,
-        },
-        maxValues: {
-          x: gridSpecification.divisions,
-          z: gridSpecification.divisions,
-        },
-      });
 
-      let blockToClone: THREE.Mesh;
+  const noiseTable: GridInfo2D<number> = createNoiseGridInfo2D(
+    gridSpecification.divisions,
+    gridSpecification.divisions,
+    1.2,
+    noiseFunctor,
+  );
+
+  let blockToClone: THREE.Mesh = sandBlock; // Single instanciation, with fallback
+
+  for (let x = 0; x < noiseTable.metadata.width; x++) {
+    for (let y = 0; y < noiseTable.metadata.height; y++) {
+      const noise = noiseTable.functions.getElement(x, y); // Is a little slow, but not too bad. Rather slow than hard to read
       if (noise < 0.1) {
         continue;
       } else if (noise < 0.2) {
@@ -110,8 +110,8 @@ const populateNoise = (scene: THREE.Scene) => {
 
       const scaledNoise = noise * 10;
 
-      const nx = x * sideLengthUnit;
-      const ny = y * sideLengthUnit;
+      const nx = (x + 1) * sideLengthUnit;
+      const ny = (y + 1) * sideLengthUnit;
       const nz = noise * 5 * sideLengthUnit;
 
       block.scale.set(1, scaledNoise, 1);
@@ -120,16 +120,6 @@ const populateNoise = (scene: THREE.Scene) => {
     }
   }
 };
-
-//enable shadows
-// dirtBlock.castShadow = true;
-// grassBlock.castShadow = true;
-// stoneBlock.castShadow = true;
-// waterBlock.castShadow = true;
-// dirtSlab.castShadow = true;
-// grassSlab.castShadow = true;
-// stoneSlab.castShadow = true;
-// waterSlab.castShadow = true;
 
 export const GridCanvas: React.FC = () => {
   const disposals: Array<() => void> = [];
@@ -212,14 +202,12 @@ export const GridCanvas: React.FC = () => {
       // ============================================================================================
       // Add Objects
       // ============================================================================================
-      //fillMap(map);
-      //populate(scene, mawp);
 
       populateNoise(scene);
 
       scene.add(gridHelper);
 
-      //Might want to make this disposal outside of useEffect to avoid attempting to dispose of undefined
+      // Might want to make this disposal outside of useEffect to avoid attempting to dispose of undefined
       disposals.push(gridHelper.dispose);
 
       // BEEEEG Populate the map
@@ -246,14 +234,14 @@ export const GridCanvas: React.FC = () => {
     }
   }, [canvasRef.current]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     if (location.pathname !== '/model') {
-  //       console.log('dispose called');
-  //       disposeAll();
-  //     }
-  //   };
-  // }, [location]);
+  useEffect(() => {
+    return () => {
+      if (location.pathname !== '/') {
+        console.log('dispose called');
+        disposeAll();
+      }
+    };
+  }, [location]);
 
   return (
     <div className="fullscreenCanvasContainer">

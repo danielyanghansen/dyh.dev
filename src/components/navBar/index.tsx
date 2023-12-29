@@ -27,7 +27,7 @@ export const NavBar: React.FC = () => {
             backgroundPosition: 'top',
           }}
         >
-          {/*The website logo on the far left*/}
+          {/* The website logo on the far left */}
 
           <Box className="box">
             <Link className="navLink" to="/model">

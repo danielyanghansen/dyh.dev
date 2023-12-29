@@ -5,14 +5,15 @@ interface LoadingScreenProps {
   isOpen: boolean;
 }
 
+// TODO: Move to a threeScene file
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({
   isOpen = true,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const green_basic = new THREE.MeshStandardMaterial({ color: 'green' });
-  const white_basic = new THREE.MeshStandardMaterial({ color: 'white' });
-  const teal_basic = new THREE.MeshStandardMaterial({ color: 'teal' });
+  // const greenBasic = new THREE.MeshStandardMaterial({ color: 'green' });
+  // const whiteBasic = new THREE.MeshStandardMaterial({ color: 'white' });
+  // const tealBasic = new THREE.MeshStandardMaterial({ color: 'teal' });
   const res = 26;
   const res2 = 26;
   const refSize = 6;
@@ -27,8 +28,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
     boxes: new Array(res * res2),
   };
 
-  const displayString = 'Loading...';
-
   const innerDimX = (refSize * boxGrid.sideLength) / boxGrid.xResolution;
   const innerDimZ = (refSize * boxGrid.sideLength) / boxGrid.yResolution;
   const miniBox = new THREE.BoxGeometry(
@@ -37,14 +36,16 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
     innerDimZ,
   );
 
-  const ArrayPosToGridPos = (arrayPos: number) => {
+  const ArrayPosToGridPos = (
+    arrayPos: number,
+  ): { positionX: number; positionY: number } => {
     return {
       positionX: arrayPos % boxGrid.xResolution,
       positionY: Math.floor(arrayPos / boxGrid.xResolution),
     };
   };
 
-  const IsAtEdge = (arrayPos: number) => {
+  const IsAtEdge = (arrayPos: number): boolean => {
     const gridPos = ArrayPosToGridPos(arrayPos);
     return (
       gridPos.positionX === 0 ||
@@ -54,7 +55,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
     );
   };
 
-  const IsOddDistanceFromCenter = (arrayPos: number) => {
+  const IsOddDistanceFromCenter = (arrayPos: number): boolean => {
     const gridPos = ArrayPosToGridPos(arrayPos);
     return (
       Math.abs(
@@ -68,7 +69,10 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
     );
   };
 
-  const IsWithinDistanceFromCenter = (arrayPos: number, distance: number) => {
+  const IsWithinDistanceFromCenter = (
+    arrayPos: number,
+    distance: number,
+  ): boolean => {
     const gridPos = ArrayPosToGridPos(arrayPos);
     return (
       Math.sqrt(

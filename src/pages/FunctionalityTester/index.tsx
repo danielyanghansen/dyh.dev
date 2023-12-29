@@ -13,7 +13,7 @@ const ModelLoaderPage: React.FC = () => {
     },
   };
 
-  //const boxScene = createBoxScene(config);
+  // const boxScene = createBoxScene(config);
   const waterScene = createWaterScene(config);
 
   const settings: ThreeSceneSettings = {

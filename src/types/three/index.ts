@@ -8,7 +8,7 @@ import type { Vector3 } from 'three';
  * @param reloadAssets - callback implemented by the scene to reload assets
  * @param resetScene - resetScene callback implemented by the scene to reset the scene to its initial state
  */
-export type ThreeSceneActions = {
+export interface ThreeSceneActions {
   populateScene: (scene: THREE.Scene) => boolean;
   animateFrame: (t_ms?: number) => void;
   // animateFrame should called externally
@@ -18,9 +18,9 @@ export type ThreeSceneActions = {
   getCameraConfig?: () => ThreeCameraConfig;
   resetScene?: () => void;
   reloadAssets?: () => void;
-};
+}
 
-export type ThreeSceneSettings = {
+export interface ThreeSceneSettings {
   enableOrbitControls?: boolean;
   renderer?: {
     pixelRatio?: number;
@@ -29,9 +29,9 @@ export type ThreeSceneSettings = {
       height?: number;
     };
   };
-};
+}
 
-export type ThreeCameraConfig = {
+export interface ThreeCameraConfig {
   configParams?: {
     fov?: number;
     aspect?: number;
@@ -40,9 +40,9 @@ export type ThreeCameraConfig = {
   };
   position?: Vector3;
   lookAt?: Vector3;
-};
+}
 
-export type ThreeSceneConfig = {
+export interface ThreeSceneConfig {
   width?: number;
   height?: number;
   backgroundColor?: string;
@@ -50,6 +50,6 @@ export type ThreeSceneConfig = {
   controls?: {
     enableOrbitControls?: boolean;
   };
-};
+}
 
 export type CreateThreeScene = (config: ThreeSceneConfig) => ThreeSceneActions;

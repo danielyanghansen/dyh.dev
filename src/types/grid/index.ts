@@ -1,14 +1,14 @@
-export type GridInfo2D<T> = {
+export interface GridInfo2D<T> {
   metadata: {
     height: number;
     width: number;
     organization: GridOrganization;
   };
 
-  grid: Array<Array<T>>;
+  grid: T[][];
   functions: {
-    getElement?: (x: number, y: number) => T;
-    setElement?: (x: number, y: number, value: T) => void;
+    getElement: (x: number, y: number) => T;
+    setElement: (x: number, y: number, value: T) => void;
     populateGrid?: (value: T) => void;
 
     // This one might not be too useful
@@ -20,7 +20,7 @@ export type GridInfo2D<T> = {
       yEnd: number,
     ) => void;
   };
-};
+}
 
 export enum GridOrganization {
   RowMajor = 'rowMajor',

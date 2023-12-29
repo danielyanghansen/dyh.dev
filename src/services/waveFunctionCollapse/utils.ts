@@ -1,8 +1,12 @@
-import { CalculateEntropy, SelectOption, WeightedOption } from './types';
+import {
+  type CalculateEntropy,
+  type SelectOption,
+  type WeightedOption,
+} from './types';
 
 export const normalizeWeightedOptions = <T>(
   options: Array<WeightedOption<T>>,
-) => {
+): Array<WeightedOption<T>> => {
   const maxWeight = options.reduce((acc, currOption) => {
     return Math.max(acc, currOption.weight);
   }, 1);
