@@ -7,7 +7,6 @@ import {
   gridSpecification,
   sideLengthUnit,
   offset,
-  type CellProps,
   noiseFunctor,
   createNoiseGridInfo2D,
 } from './gridUtils';

@@ -1,7 +1,9 @@
-import type { GridInfo2D, GridDirection, GridOrganization } from '@/types/grid';
+import type { GridInfo2D } from '@/types/grid';
 import * as THREE from 'three';
 
-const createVertexGrid = (gridInfo: GridInfo2D<number>): THREE.BufferGeometry => {
+export const createVertexGrid = (
+  gridInfo: GridInfo2D<number>,
+): THREE.BufferGeometry => {
   const geometry = new THREE.BufferGeometry();
 
   const vertexBuffer: number[] = [];
