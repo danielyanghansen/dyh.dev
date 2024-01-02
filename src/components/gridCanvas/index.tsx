@@ -8,8 +8,9 @@ import {
   sideLengthUnit,
   offset,
   noiseFunctor,
-  createNoiseGridInfo2D,
 } from './gridUtils';
+
+import { createNoiseGridInfo2D } from '@/services/noiseProceduralGeneration';
 
 import '../../shared.css';
 import { type GridInfo2D } from '@/types/grid';
