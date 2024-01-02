@@ -1,8 +1,9 @@
-import { type GridInfo2D, GridOrganization } from '@/types/grid';
+import type { GridInfo2D } from '@/types/grid';
+import { GridOrganization } from '@/types/grid';
+import type { NoiseFunctor } from '@/types/terrainGeneration';
 import {
   createNoiseFunctor,
   DEFAULT_EXTRA_OCTAVES,
-  type NoiseFunctor,
 } from '@/utils/terrainGeneration';
 import * as THREE from 'three';
 
