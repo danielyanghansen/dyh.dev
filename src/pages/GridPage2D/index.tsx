@@ -4,6 +4,14 @@ import React, { useState } from 'react';
 import txGrass from '@/assets/TX_Tileset_Grass.png';
 import txStoneGround from '@/assets/TX_Tileset_Stone_Ground.png';
 
+/**
+ * AtlasInfo: Info about a texture atlas. Note: We expect each tile in the atlas to be square.
+ * @property name - name of the atlas
+ * @property url - url of the atlas
+ * @property widthInTiles - number of tiles in the atlas in the x direction
+ * @property heightInTiles - number of tiles in the atlas in the y direction
+ * @property tileStride - the pixel width/height of each tile. We expect each tile to be square.
+ */
 interface AtlasInfo {
   name: string;
   url: string;

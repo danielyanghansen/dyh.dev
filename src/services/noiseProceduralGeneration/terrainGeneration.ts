@@ -7,19 +7,7 @@ import type {
   NoiseFunctorGenerator,
   NoiseFunctorInput,
   NoiseParams,
-  OctaveParams,
-} from '@/types/terrainGeneration';
-
-export const DEFAULT_EXTRA_OCTAVES: OctaveParams[] = [
-  {
-    frequency: 2,
-    weight: 0.5,
-  },
-  {
-    frequency: 4,
-    weight: 0.25,
-  },
-];
+} from './types';
 
 export const createNoiseFunctor: NoiseFunctorGenerator = (
   noiseParams: NoiseParams,

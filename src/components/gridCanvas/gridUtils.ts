@@ -1,7 +1,4 @@
-import {
-  createNoiseFunctor,
-  DEFAULT_EXTRA_OCTAVES,
-} from '@/utils/terrainGeneration';
+import { DEFAULTS } from '@/services/noiseProceduralGeneration';
 import * as THREE from 'three';
 
 export const gridSpecification = {
@@ -30,14 +27,7 @@ export interface CellProps {
   blockStack: BlockVariant[];
 }
 
-export const noiseFunctor = createNoiseFunctor({
-  redistribution: 4,
-  baseOctave: {
-    frequency: 2,
-    weight: 4,
-  },
-  extraOctaves: DEFAULT_EXTRA_OCTAVES,
-});
+export const noiseFunctor = DEFAULTS.DEFAULT_NOISE_FUNCTOR;
 
 // TODO: Make this a generator, fix code smell, and make the signature GridInfo2D<number> => (Array<CellProps> | GridInfo2D<Array<BlockVariant>>)  (or something like that)
 export const fillMap = (map: CellProps[]): void => {

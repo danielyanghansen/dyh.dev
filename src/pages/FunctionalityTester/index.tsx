@@ -1,7 +1,6 @@
 import React from 'react';
 import { SceneRenderer } from '@/components/sceneRenderer';
-import { createBoxScene } from '@/threeScenes/boxScene';
-import { createWaterScene } from '@/threeScenes/waterScene';
+import { createWaterScene } from '@/threeScenes';
 import type { ThreeSceneConfig, ThreeSceneSettings } from '@/types/three';
 import { Typography } from '@mui/material';
 
