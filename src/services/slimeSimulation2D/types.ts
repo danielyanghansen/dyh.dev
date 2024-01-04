@@ -1,6 +1,6 @@
 // We start off placing our "slime" in a world.
-// The world has a width and a height, and is a 2D grid.
-// Each cell in the grid can posess a scalar amount "pheromones" that attract the slime.
+// The world has a width and a height, and is a 2D world.
+// This world can be populated with "slime pheromones", which decay over time.
 // The slime is probibalistically attracted to the pheromones.
 // The slime can also leave pheromones behind.
 // The slime can also move semi-randomly.
@@ -18,14 +18,25 @@ export enum SlimeType {
   White = '#ffffff',
 }
 
-export type PheromoneCell = {
-  [key in SlimeType]: number;
+/**
+ * For simplicity, we make the pheromone count go down by 1 every time step
+ */
+export type Pheromone = {
+  count: number;
+  type: SlimeType;
+  coords: {
+    x: number;
+    y: number;
+  };
 };
 
-export type PheromoneGrid2D = {
+/**
+ *
+ */
+export type SlimeGridInfo = {
   width: number;
   height: number;
-  grid: PheromoneCell[][];
+  pheromones: Pheromone[];
 };
 
 export type SlimeParticle = {

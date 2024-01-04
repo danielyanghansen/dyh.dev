@@ -68,7 +68,7 @@ export const SceneRenderer: React.FC<SceneRendererProps> = (props) => {
       animate();
     }
   }),
-  [canvasRef.current];
+    [canvasRef.current];
 
   return (
     <div className={'fullscreenCanvasContainer'}>

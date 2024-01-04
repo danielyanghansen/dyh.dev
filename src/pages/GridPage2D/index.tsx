@@ -38,7 +38,7 @@ const atlases: AtlasInfo[] = [
 ];
 
 const SingleAtlasDisplay: React.FC<
-AtlasInfo & { scale?: number; selectedTile?: { x: number; y: number } }
+  AtlasInfo & { scale?: number; selectedTile?: { x: number; y: number } }
 > = ({
   // name,
   url,
