@@ -1,5 +1,5 @@
 import { createNoiseFunctor } from './terrainGeneration';
-import { OctaveParams } from './types';
+import { type OctaveParams } from './types';
 
 export const DEFAULT_EXTRA_OCTAVES: OctaveParams[] = [
   {

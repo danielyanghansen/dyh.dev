@@ -28,7 +28,7 @@ export const createNoiseGridInfo2D = (
       // This is just for convenience, so that the coordinates match the map array
       grid[y][x] = _noiseFunctor({
         coords: {
-          x: x,
+          x,
           z: y,
         },
         maxValues: {

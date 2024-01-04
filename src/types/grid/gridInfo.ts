@@ -1,4 +1,4 @@
-import { GridOrganization } from './gridEnums';
+import { type GridOrganization } from './gridEnums';
 
 export interface GridInfo2D<T> {
   metadata: {

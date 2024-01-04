@@ -56,28 +56,28 @@ export const createVertexGrid = (
         // Triangle 1
         xTopLeft,
         yTopLeft,
-        zTopLeft, //anchor1
+        zTopLeft, // anchor1
 
         xTopRight,
         yTopRight,
-        zTopRight, //leftArm1
+        zTopRight, // leftArm1
 
         xBottomLeft,
         yBottomLeft,
-        zBottomLeft, //rightArm1
+        zBottomLeft, // rightArm1
 
         // Triangle 2
         xBottomRight,
         yBottomRight,
-        zBottomRight, //anchor2
+        zBottomRight, // anchor2
 
         xBottomLeft,
         yBottomLeft,
-        zBottomLeft, //leftArm2
+        zBottomLeft, // leftArm2
 
         xTopRight,
         yTopRight,
-        zTopRight, //rightArm2
+        zTopRight, // rightArm2
       );
     }
   }
