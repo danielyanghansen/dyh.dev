@@ -1,7 +1,7 @@
 import type { Pheromone, SlimeGridInfo, SlimeParticle } from './types';
 import { SlimeType } from './types';
 
-const DEFAULT_PHEROMONE_PRODUCTION_RATE = 2;
+const DEFAULT_PHEROMONE_PRODUCTION_RATE = 3;
 const DEFAULT_PHEROMONE_DECAY_RATE = 1;
 
 // We are always working with an array of slime particles
@@ -12,7 +12,7 @@ const DEFAULT_PHEROMONE_DECAY_RATE = 1;
  * Very simple function to update the slime particles based on its current velocity
  * @param particle The slime particle to update
  */
-const updateParticlePosition = (particle: SlimeParticle) => {
+const updateParticlePosition = (particle: SlimeParticle): void => {
   particle.coords.x += particle.velocity.x;
   particle.coords.y += particle.velocity.y;
 };
@@ -26,7 +26,7 @@ const updateParticlePosition = (particle: SlimeParticle) => {
 const updateParticleVelocity = (
   particle: SlimeParticle,
   pheromoneGrid: SlimeGridInfo,
-) => {
+): void => {
   // Read grid. To get pheromone values for going front, left, or right.
   const { coords, velocity, type } = particle;
 
@@ -40,7 +40,7 @@ const updateParticleVelocity = (
 const layPheromone = (
   particle: SlimeParticle,
   pheromoneGrid: SlimeGridInfo,
-) => {
+): void => {
   const { coords, type } = particle;
   const { x, y } = coords;
 
@@ -61,10 +61,10 @@ const layPheromone = (
   pheromoneGrid.pheromones.push(newPheromone);
 };
 
-const updateAllParticles = (
+export const updateAllParticles = (
   particles: SlimeParticle[],
   pheromoneGrid: SlimeGridInfo,
-) => {
+): void => {
   particles.forEach((particle) => {
     updateParticleVelocity(particle, pheromoneGrid); // This will update the velocity
     updateParticlePosition(particle); // This will update the position
@@ -72,11 +72,19 @@ const updateAllParticles = (
   });
 };
 
-const decayPheromones = (pheromoneGrid: SlimeGridInfo) => {
+export const decayPheromones = (pheromoneGrid: SlimeGridInfo): void => {
   pheromoneGrid.pheromones = pheromoneGrid.pheromones
     .map((pheromone) => {
       pheromone.count -= DEFAULT_PHEROMONE_DECAY_RATE;
       return pheromone;
     })
     .filter((pheromone) => pheromone.count > 0);
+};
+
+export const updateWorld = (
+  particles: SlimeParticle[],
+  pheromoneGrid: SlimeGridInfo,
+): void => {
+  updateAllParticles(particles, pheromoneGrid);
+  decayPheromones(pheromoneGrid);
 };

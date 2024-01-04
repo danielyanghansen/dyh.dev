@@ -21,25 +21,39 @@ export enum SlimeType {
 /**
  * For simplicity, we make the pheromone count go down by 1 every time step
  */
-export type Pheromone = {
+export interface Pheromone {
   count: number;
   type: SlimeType;
   coords: {
     x: number;
     y: number;
   };
-};
+}
 
 /**
- *
+ * SlimeGridInfo is a type that defines the grid that the slime lives in
+ * width: the width of the grid
+ * height: the height of the grid
+ * pheromones: an array of pheromones that are currently in the grid. These are expected to decay over time
  */
-export type SlimeGridInfo = {
+export interface SlimeGridInfo {
   width: number;
   height: number;
   pheromones: Pheromone[];
-};
+}
 
-export type SlimeParticle = {
+/**
+ * SlimeScanCone is a type that defines a cone that the slime can "smell" in.
+ * So far this is "universal" for all slime types.
+ * radius: the distance from the slime that the cone extends to
+ * includedAgnle, the angle of the cone, wall-to-wall, in radians
+ */
+export interface SlimeScanCone {
+  radius: number;
+  includedAngle: number;
+}
+
+export interface SlimeParticle {
   coords: {
     x: number;
     y: number;
@@ -49,4 +63,4 @@ export type SlimeParticle = {
     y: number;
   };
   type: SlimeType;
-};
+}
