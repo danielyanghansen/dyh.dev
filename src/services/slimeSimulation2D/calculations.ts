@@ -1,8 +1,22 @@
-import type { Pheromone, SlimeGridInfo, SlimeParticle } from './types';
+import {
+  calculateAngle,
+  calculateDistance,
+  getAngleFromVelocity,
+} from './trigonometry';
+import type {
+  Pheromone,
+  SlimeGridInfo,
+  SlimeParticle,
+  SlimeScanCone,
+} from './types';
 import { SlimeType } from './types';
 
 const DEFAULT_PHEROMONE_PRODUCTION_RATE = 3;
 const DEFAULT_PHEROMONE_DECAY_RATE = 1;
+const DEFAULT_SLIME_SCAN_CONE: SlimeScanCone = {
+  radius: 5,
+  includedAngle: Math.PI / 4,
+};
 
 // We are always working with an array of slime particles
 
@@ -30,11 +44,35 @@ const updateParticleVelocity = (
   // Read grid. To get pheromone values for going front, left, or right.
   const { coords, velocity, type } = particle;
 
+  const relevantPheromones = pheromoneGrid.pheromones.filter((pheromone) => {
+    return isInSclimeScaneCone(particle, DEFAULT_SLIME_SCAN_CONE, pheromone);
+  });
+
   // Need to be within bounds
 
   // Calculate acceleration based on pheromone grid and some randomness
 
   // If we are at the edge of the world, bounce off by inverting the velocity
+};
+
+export const isInSclimeScaneCone = (
+  slimeParticle: SlimeParticle,
+  cone: SlimeScanCone,
+  pheromone: Pheromone,
+): boolean => {
+  const angleToPheromone = calculateAngle(
+    slimeParticle.coords,
+    pheromone.coords,
+  );
+
+  const velocityAngle = getAngleFromVelocity(slimeParticle.velocity);
+  const absAngleDifference = Math.abs(angleToPheromone - velocityAngle);
+
+  const isWithinConeAngle = absAngleDifference <= cone.includedAngle / 2;
+  const isWithinRadius =
+    calculateDistance(slimeParticle.coords, pheromone.coords) <= cone.radius;
+
+  return isWithinConeAngle && isWithinRadius;
 };
 
 const layPheromone = (
@@ -52,10 +90,7 @@ const layPheromone = (
   const newPheromone: Pheromone = {
     count: DEFAULT_PHEROMONE_PRODUCTION_RATE,
     type,
-    coords: {
-      x,
-      y,
-    },
+    coords,
   };
 
   pheromoneGrid.pheromones.push(newPheromone);

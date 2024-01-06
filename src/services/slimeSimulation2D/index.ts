@@ -10,4 +10,5 @@ export {
   updateAllParticles,
   decayPheromones,
   updateWorld,
+  isInSclimeScaneCone,
 } from './calculations';

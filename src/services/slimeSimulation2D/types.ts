@@ -6,6 +6,8 @@
 // The slime can also move semi-randomly.
 // The pheromones decay over time.
 
+import { type Vector2 } from 'three';
+
 // We start with defining our slime types
 
 /**
@@ -24,10 +26,7 @@ export enum SlimeType {
 export interface Pheromone {
   count: number;
   type: SlimeType;
-  coords: {
-    x: number;
-    y: number;
-  };
+  coords: Vector2;
 }
 
 /**
@@ -54,13 +53,7 @@ export interface SlimeScanCone {
 }
 
 export interface SlimeParticle {
-  coords: {
-    x: number;
-    y: number;
-  };
-  velocity: {
-    x: number;
-    y: number;
-  };
+  coords: Vector2;
+  velocity: Vector2;
   type: SlimeType;
 }
