@@ -9,7 +9,7 @@ import type {
 
 import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
-export const createWaterScene: CreateThreeScene = (config) => {
+export const createVertexGridTestScene: CreateThreeScene = (config) => {
   // ============================================================================================
   // CONFIG
   // ============================================================================================
