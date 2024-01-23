@@ -1,22 +1,25 @@
 import React from 'react';
 import { selectVoteSession, voteActions } from '@/redux/slices/voteSlice';
-import { iterateSTV, totalVoteCount } from '@/services/singleTransferableVote';
+import {
+  getCurrentAlternativeCount,
+  iterateSTV,
+  totalVoteCount,
+} from '@/services/singleTransferableVote';
 import {
   type FakeVoteSession,
   getFruitName,
+  getFruitEmoji,
 } from '@/types/singleTransferableVote';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { Button } from '@mui/material';
 
 const VoteDemoSTV: React.FC = () => {
   const fakeVotes = useAppSelector(selectVoteSession);
   const dispatch = useAppDispatch();
 
   const iterate = (): void => {
-    console.log('1: ', totalVoteCount(fakeVotes), fakeVotes);
     const nextVotes = iterateSTV(fakeVotes);
-    console.log('2: ', totalVoteCount(nextVotes), nextVotes);
     dispatch(voteActions.updateVotes(nextVotes.ballots));
-    console.log('3: ', totalVoteCount(fakeVotes), fakeVotes);
   };
 
   const ballotsAsText = (ballotsToDisplay: FakeVoteSession): JSX.Element[] => {
@@ -25,14 +28,16 @@ const VoteDemoSTV: React.FC = () => {
     return ballotsToDisplay.ballots.map((ballot, i) => {
       const ballotAsText = ballot.votes
         .map((fruit, j) => {
-          return getFruitName(fruit);
+          return getFruitEmoji(fruit);
         })
         .join(',\t');
 
+      const BallotText =
+        'Stemmeseddel ' + (i + 1) + ' : [' + ballotAsText + ']';
+
       return (
         <div key={i}>
-          <span>Ballot {i + 1}: </span>
-          {ballotAsText}
+          <span>{BallotText} </span>
         </div>
       );
     });
@@ -42,7 +47,7 @@ const VoteDemoSTV: React.FC = () => {
 
   return (
     <>
-      <button onClick={iterate}>Iterate</button>
+      <Button onClick={iterate}>Iterate</Button>
       <div
         style={{
           textAlign: 'left',

@@ -42,7 +42,7 @@ export const getLeastCommonFruitAlternatives = (
   return leastCommonFruits;
 };
 
-const getCurrentAlternativeCount = (
+export const getCurrentAlternativeCount = (
   voteSession: FakeVoteSession,
 ): Record<number, number> => {
   const fruitCounts: Record<number, number> = {};

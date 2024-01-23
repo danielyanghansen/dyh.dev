@@ -23,6 +23,8 @@ export const getFruitName = (fruit: FakeVoteFruitAlternatives): string => {
       return 'Apple';
     case FakeVoteFruitAlternatives.Orange:
       return 'Orange';
+    default:
+      return '_';
   }
 };
 
@@ -36,5 +38,22 @@ export const getFruitColor = (fruit: FakeVoteFruitAlternatives): string => {
       return 'green';
     case FakeVoteFruitAlternatives.Orange:
       return 'orange';
+    default:
+      return 'grey';
+  }
+};
+
+export const getFruitEmoji = (fruit: FakeVoteFruitAlternatives): string => {
+  switch (fruit) {
+    case FakeVoteFruitAlternatives.Tomato:
+      return '🍅';
+    case FakeVoteFruitAlternatives.Banana:
+      return '🍌';
+    case FakeVoteFruitAlternatives.Apple:
+      return '🍏';
+    case FakeVoteFruitAlternatives.Orange:
+      return '🍊';
+    default:
+      return '❌';
   }
 };
