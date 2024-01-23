@@ -6,28 +6,40 @@ import { LoadingScreen } from '@/components';
 import { gridActions, selectGrid } from '@/redux/slices/gridSlice';
 
 import './DefaultPage.css';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
 
 const App: React.FC = () => {
-  const grid = useSelector(selectGrid);
+  const grid = useAppSelector(selectGrid);
+
   const height = grid.gridHeight;
 
   const store = useStore();
   const state = store.getState();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const addToGridHeight = (diff: number) => {
+    dispatch(gridActions.updateGridHeight(height + diff));
+  };
+
+  console.log(grid);
 
   return (
     <div className="App">
-      <LoadingScreen isOpen={true} />
+      <LoadingScreen isOpen={false} />
       <h1>Daniel Yang Hansen</h1>
       <div className="card">
         <button
-          onClick={() => dispatch(gridActions.updateGridHeight(height + 1))}
+          onClick={() => {
+            addToGridHeight(1);
+          }}
         >
           increment
         </button>
-        <h2>Grid heigh is {height}</h2>
+        <h2>Grid height is {height}</h2>
         <button
-          onClick={() => dispatch(gridActions.updateGridHeight(height - 1))}
+          onClick={() => {
+            addToGridHeight(-1);
+          }}
         >
           decrement
         </button>

@@ -6,6 +6,7 @@ import NotFound from '@/pages/404NotFound';
 import Home from '@/pages/Home';
 import ModelLoaderPage from '@/pages/ModelLoader';
 import FunctionalityTester from '@/pages/FunctionalityTester';
+import VoteDemoSTV from '@/pages/VoteDemoSTV';
 
 import './index.css';
 import { NavBar } from '@/components';
@@ -21,6 +22,7 @@ const App: React.FC = () => {
         <Route path="model" element={<ModelLoaderPage />} />
         <Route path="grid" element={<GridPage2D />} />
         <Route path="test" element={<FunctionalityTester />} />
+        <Route path="stv-demo" element={<VoteDemoSTV />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
