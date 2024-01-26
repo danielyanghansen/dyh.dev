@@ -3,15 +3,14 @@ import { selectVoteSession, voteActions } from '@/redux/slices/voteSlice';
 import {
   getCurrentAlternativeCount,
   iterateSTV,
-  totalVoteCount,
+  returnWinner,
 } from '@/services/singleTransferableVote';
 import {
   type FakeVoteSession,
-  getFruitName,
   getFruitEmoji,
 } from '@/types/singleTransferableVote';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 const VoteDemoSTV: React.FC = () => {
   const fakeVotes = useAppSelector(selectVoteSession);
@@ -20,6 +19,25 @@ const VoteDemoSTV: React.FC = () => {
   const iterate = (): void => {
     const nextVotes = iterateSTV(fakeVotes);
     dispatch(voteActions.updateVotes(nextVotes.ballots));
+  };
+
+  const findWinner = (): void => {
+    const counts = getCurrentAlternativeCount(fakeVotes);
+    console.log(counts);
+    if (Object.values(counts).length <= 1) {
+      const winner = returnWinner(fakeVotes);
+      dispatch(voteActions.addWinner(winner));
+    }
+  };
+
+  const reset = (): void => {
+    // I don't know why these voteAction action functions require a payload when the respective reducers don't use take any payload arguments
+    dispatch(voteActions.resetVotes(0));
+    dispatch(voteActions.removeWinnersFromBallots(0));
+  };
+
+  const hardReset = (): void => {
+    dispatch(voteActions.resetElection(0));
   };
 
   const ballotsAsText = (ballotsToDisplay: FakeVoteSession): JSX.Element[] => {
@@ -47,16 +65,51 @@ const VoteDemoSTV: React.FC = () => {
 
   return (
     <>
-      <Button onClick={iterate}>Iterate</Button>
-      <div
-        style={{
-          textAlign: 'left',
-          marginLeft: '20px',
-          marginTop: '20px',
-        }}
-      >
-        {ballotsAsText(fakeVotes)}
-      </div>
+      <Box style={{ width: '100%' }}>
+        <Box>
+          <Button onClick={iterate} variant="contained" color="info">
+            Iterate
+          </Button>
+          <Button onClick={findWinner} variant="contained" color="info">
+            Find winner
+          </Button>
+          <Button onClick={reset} variant="contained" color="info">
+            Reset to next round
+          </Button>
+        </Box>
+
+        <Box
+          style={{
+            textAlign: 'left',
+            marginLeft: '20px',
+            marginTop: '20px',
+          }}
+        >
+          <Typography variant="h6">Ballots</Typography>
+          <Typography variant="body1">{ballotsAsText(fakeVotes)}</Typography>
+        </Box>
+        <hr />
+        <Box>
+          <Box>
+            <Typography variant="h5">Winners:</Typography>
+            <Typography variant="body1">
+              [{' '}
+              {fakeVotes.winners
+                .map((fruit) => getFruitEmoji(fruit))
+                .join(' | ')}{' '}
+              ]
+            </Typography>
+          </Box>
+        </Box>
+        <br />
+        <br />
+        <hr />
+        <br />
+
+        <Button onClick={hardReset} variant="outlined" color="error">
+          Reset election
+        </Button>
+      </Box>
     </>
   );
 };

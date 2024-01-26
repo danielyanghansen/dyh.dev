@@ -11,6 +11,7 @@ export interface FakeVoteFruitBallot {
 }
 export interface FakeVoteSession {
   ballots: FakeVoteFruitBallot[];
+  winners: FakeVoteFruitAlternatives[];
 }
 
 export const getFruitName = (fruit: FakeVoteFruitAlternatives): string => {

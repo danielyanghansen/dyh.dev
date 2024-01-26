@@ -1,6 +1,6 @@
 import type {
   FakeVoteSession,
-  FakeVoteFruitAlternatives,
+  FakeVoteFruitAlternatives as Fruit,
 } from '@/types/singleTransferableVote';
 import _ from 'lodash';
 
@@ -11,14 +11,14 @@ import _ from 'lodash';
  */
 export const getMostCommonFruitAlternatives = (
   voteSession: FakeVoteSession,
-): FakeVoteFruitAlternatives[] => {
+): Fruit[] => {
   const fruitCounts = getCurrentAlternativeCount(voteSession);
   const mostCommonFruitCount = Math.max(...Object.values(fruitCounts));
 
-  const mostCommonFruits: FakeVoteFruitAlternatives[] = [];
+  const mostCommonFruits: Fruit[] = [];
   Object.entries(fruitCounts).forEach(([fruit, count]) => {
     if (count === mostCommonFruitCount) {
-      mostCommonFruits.push(Number(fruit) as FakeVoteFruitAlternatives);
+      mostCommonFruits.push(Number(fruit) as Fruit);
     }
   });
 
@@ -27,15 +27,15 @@ export const getMostCommonFruitAlternatives = (
 
 export const getLeastCommonFruitAlternatives = (
   voteSession: FakeVoteSession,
-): FakeVoteFruitAlternatives[] => {
+): Fruit[] => {
   const fruitCounts = getCurrentAlternativeCount(voteSession);
 
   const leastCommonFruitCount = Math.min(...Object.values(fruitCounts));
 
-  const leastCommonFruits: FakeVoteFruitAlternatives[] = [];
+  const leastCommonFruits: Fruit[] = [];
   Object.entries(fruitCounts).forEach(([fruit, count]) => {
     if (count === leastCommonFruitCount) {
-      leastCommonFruits.push(Number(fruit) as FakeVoteFruitAlternatives);
+      leastCommonFruits.push(Number(fruit) as Fruit);
     }
   });
 
@@ -91,4 +91,17 @@ export const totalVoteCount = (session: FakeVoteSession): number => {
   });
 
   return count;
+};
+
+export const returnWinner = (session: FakeVoteSession): Fruit | null => {
+  const fruitCounts = getCurrentAlternativeCount(session);
+
+  if (Object.keys(fruitCounts).length < 1) {
+    return null;
+  }
+
+  const winner = Object.entries(fruitCounts).reduce((a, b) =>
+    a[1] > b[1] ? a : b,
+  );
+  return Number(winner[0]) as Fruit;
 };

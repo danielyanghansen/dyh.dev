@@ -2,39 +2,43 @@ import { type Slice, createSlice } from '@reduxjs/toolkit';
 
 import {
   type FakeVoteSession,
+  type FakeVoteFruitBallot,
   FakeVoteFruitAlternatives as Fruit,
 } from '@/types/singleTransferableVote';
 
-const defaultFruitBallots: FakeVoteSession = {
-  ballots: [
-    { votes: [Fruit.Tomato, Fruit.Banana, Fruit.Apple, Fruit.Orange] },
-    { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange] },
-    { votes: [Fruit.Apple, Fruit.Banana, Fruit.Orange] },
-    { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
-    { votes: [Fruit.Banana, Fruit.Tomato, Fruit.Apple, Fruit.Orange] },
-    { votes: [Fruit.Apple, Fruit.Banana, Fruit.Orange] },
-    { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange, Fruit.Tomato] },
-    { votes: [Fruit.Banana, Fruit.Orange, Fruit.Apple] },
-    { votes: [Fruit.Tomato, Fruit.Banana, Fruit.Apple, Fruit.Orange] },
-    { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange] },
-    { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
-    { votes: [Fruit.Banana, Fruit.Orange, Fruit.Apple] },
-    { votes: [Fruit.Apple, Fruit.Banana, Fruit.Orange, Fruit.Tomato] },
-    { votes: [Fruit.Banana, Fruit.Tomato, Fruit.Apple, Fruit.Orange] },
-    { votes: [Fruit.Orange, Fruit.Apple, Fruit.Banana] },
-    { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange, Fruit.Tomato] },
-    { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
-    { votes: [Fruit.Tomato, Fruit.Apple, Fruit.Banana, Fruit.Orange] },
-    { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange] },
-    { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
-    { votes: [Fruit.Tomato] },
-  ],
+const originalBallots: FakeVoteFruitBallot[] = [
+  { votes: [Fruit.Tomato, Fruit.Banana, Fruit.Apple, Fruit.Orange] },
+  { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange] },
+  { votes: [Fruit.Apple, Fruit.Banana, Fruit.Orange] },
+  { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
+  { votes: [Fruit.Banana, Fruit.Tomato, Fruit.Apple, Fruit.Orange] },
+  { votes: [Fruit.Apple, Fruit.Banana, Fruit.Orange] },
+  { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange, Fruit.Tomato] },
+  { votes: [Fruit.Banana, Fruit.Orange, Fruit.Apple] },
+  { votes: [Fruit.Tomato, Fruit.Banana, Fruit.Apple, Fruit.Orange] },
+  { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange] },
+  { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
+  { votes: [Fruit.Banana, Fruit.Orange, Fruit.Apple] },
+  { votes: [Fruit.Apple, Fruit.Banana, Fruit.Orange, Fruit.Tomato] },
+  { votes: [Fruit.Banana, Fruit.Tomato, Fruit.Apple, Fruit.Orange] },
+  { votes: [Fruit.Orange, Fruit.Apple, Fruit.Banana] },
+  { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange, Fruit.Tomato] },
+  { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
+  { votes: [Fruit.Tomato, Fruit.Apple, Fruit.Banana, Fruit.Orange] },
+  { votes: [Fruit.Banana, Fruit.Apple, Fruit.Orange] },
+  { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
+  { votes: [Fruit.Tomato] },
+];
+
+const initialState: FakeVoteSession = {
+  ballots: originalBallots,
+  winners: [],
 };
 
 // create a slice to store the state of the app
 export const voteSlice: Slice = createSlice({
   name: 'votes',
-  initialState: defaultFruitBallots,
+  initialState,
 
   reducers: {
     // reducers go here
@@ -42,7 +46,31 @@ export const voteSlice: Slice = createSlice({
       voteState.ballots = action.payload;
     },
     resetVotes: (voteState, _) => {
-      voteState = defaultFruitBallots;
+      voteState.ballots = initialState.ballots;
+    },
+    resetElection: (voteState, _) => {
+      voteState.ballots = initialState.ballots;
+      voteState.winners = initialState.winners;
+    },
+    addWinner: (voteState, action) => {
+      if (!voteState.winners) {
+        voteState.winners = [];
+      }
+      if (voteState.winners.includes(action.payload)) {
+        return;
+      }
+      voteState.winners = [...voteState.winners, action.payload];
+    },
+    removeWinnersFromBallots: (voteState, _) => {
+      voteState.ballots = voteState.ballots.map(
+        (ballot: FakeVoteFruitBallot) => {
+          return {
+            votes: ballot.votes.filter(
+              (vote) => !voteState.winners?.includes(vote),
+            ),
+          };
+        },
+      );
     },
   },
 });
