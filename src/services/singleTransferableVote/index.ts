@@ -75,7 +75,7 @@ export const iterateSTV = (session: FakeVoteSession): FakeVoteSession => {
   transformedBallots.ballots.forEach((ballot) => {
     const votes = ballot.votes;
 
-    if (votes?.[0] && leastCommonFruits.includes(votes[0])) {
+    if (votes[0] != null && leastCommonFruits.includes(votes[0])) {
       votes.shift();
     }
   });

@@ -52,11 +52,11 @@ export const voteSlice: Slice = createSlice({
       voteState.ballots = initialState.ballots;
       voteState.winners = initialState.winners;
     },
-    addWinner: (voteState, action) => {
-      if (!voteState.winners) {
+    addWinner: (voteState: FakeVoteSession, action) => {
+      if (voteState.winners === null || voteState.winners === undefined) {
         voteState.winners = [];
       }
-      if (voteState.winners.includes(action.payload)) {
+      if (voteState.winners?.includes(action.payload)) {
         return;
       }
       voteState.winners = [...voteState.winners, action.payload];
@@ -65,9 +65,10 @@ export const voteSlice: Slice = createSlice({
       voteState.ballots = voteState.ballots.map(
         (ballot: FakeVoteFruitBallot) => {
           return {
-            votes: ballot.votes.filter(
-              (vote) => !voteState.winners?.includes(vote),
-            ),
+            votes:
+              ballot.votes.filter(
+                (vote) => !voteState.winners?.includes(vote),
+              ) ?? [],
           };
         },
       );

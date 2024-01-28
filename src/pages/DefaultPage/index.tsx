@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useDispatch, useSelector, useStore } from 'react-redux';
-
 import { LoadingScreen } from '@/components';
 import { gridActions, selectGrid } from '@/redux/slices/gridSlice';
 
@@ -13,8 +11,6 @@ const App: React.FC = () => {
 
   const height = grid.gridHeight;
 
-  const store = useStore();
-  const state = store.getState();
   const dispatch = useAppDispatch();
 
   const addToGridHeight = (diff: number) => {
