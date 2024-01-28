@@ -20,7 +20,7 @@ const originalBallots: FakeVoteFruitBallot[] = [
   { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
   { votes: [Fruit.Banana, Fruit.Orange, Fruit.Apple] },
   { votes: [Fruit.Tomato, Fruit.Apple, Fruit.Banana, Fruit.Orange] },
-  { votes: [Fruit.Tomato,Fruit.Banana,  Fruit.Apple, Fruit.Orange] },
+  { votes: [Fruit.Tomato, Fruit.Banana, Fruit.Apple, Fruit.Orange] },
   { votes: [Fruit.Orange, Fruit.Apple, Fruit.Banana] },
   { votes: [Fruit.Tomato, Fruit.Banana, Fruit.Apple, Fruit.Orange] },
   { votes: [Fruit.Orange, Fruit.Banana, Fruit.Apple] },
