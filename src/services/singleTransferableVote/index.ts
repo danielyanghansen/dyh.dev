@@ -58,7 +58,6 @@ export const getCurrentAlternativeCount = (
   return fruitCounts;
 };
 
-// Important to make a new list, so that preact signals is triggered
 export const iterateSTV = (session: FakeVoteSession): FakeVoteSession => {
   // Make a copy of the session
 
